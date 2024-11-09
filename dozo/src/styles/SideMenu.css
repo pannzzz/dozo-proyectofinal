@@ -1,0 +1,87 @@
+    /* src/styles/SideMenu.css */
+
+    /* Overlay que cubre todo el fondo cuando el menú está abierto */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+        z-index: 200; /* Aseguramos que el overlay esté por encima del MovingBanner */
+        transition: opacity 0.3s ease;
+    }
+    
+    /* Menú lateral */
+    .side-menu {
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 300px;
+        height: 100%;
+        background-color: white;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+        padding: 20px;
+        z-index: 300; /* Aseguramos que el menú esté por encima de todo, incluido el MovingBanner */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        animation: slide-in 0.3s ease-out;
+    }
+    
+    @keyframes slide-in {
+        from {
+        transform: translateX(100%);
+        }
+        to {
+        transform: translateX(0);
+        }
+    }
+    
+    @keyframes slide-out {
+        from {
+        transform: translateX(0);
+        }
+        to {
+        transform: translateX(100%);
+        }
+    }
+    
+    .side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .side-menu ul li {
+        margin: 20px 0;
+        font-size: 18px;
+    }
+    
+    .side-menu ul li a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+    }
+    
+    .close-button {
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        position: absolute;
+        top: 20px;
+        right: 20px;
+    }
+    
+    .side-menu-icons {
+        display: flex;
+        justify-content: space-around;
+        padding-bottom: 20px;
+    }
+    
+    .side-menu-icons i {
+        font-size: 24px;
+        color: black;
+        cursor: pointer;
+    }
