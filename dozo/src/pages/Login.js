@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import '../styles/Login.css';
+import FooterComponent from '../components/FooterComponent';
+
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -76,6 +78,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <FooterComponent />
         </>
     );
 };

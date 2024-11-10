@@ -58,10 +58,10 @@ const NewsSectionComponent = () => {
             <div className="how-section-title">
                 <WhatsNewIcon />
             </div>
-            <p className="how-section-subtitle">La historia que comienza con dōzo</p>
+            <p className="how-section-subtitle">La historia que comienza con dozo</p>
             <p className="how-section-description">
-                <span>dōzo es un servicio de regalos sociales que permite</span><br />
-                <span>a los destinatarios elegir y recibir sus regalos favoritos.</span>
+                <span>dozo es un servicio sociales que permite</span><br />
+                <span>a los destinatarios elegir y recibir sus prendas favoritas.</span>
             </p>
 
             <div className="how-section-slider">
@@ -92,7 +92,7 @@ const NewsSectionComponent = () => {
             
             {/* Botón para redirigir a otra página */}
             <button className="how-main-button" onClick={() => navigate('/howto')}>
-                Cómo usar el dōzo
+                Cómo usar dozo
             </button>
         </div>
     );

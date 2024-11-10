@@ -5,6 +5,7 @@ import '../styles/About.css';
 import image1 from '../assets/img-about/about-01.png';
 import image2 from '../assets/img-about/about-02.png';
 import image3 from '../assets/img-about/about-03.png';
+import FooterComponent from '../components/FooterComponent';
 
 const About = () => {
     return (
@@ -74,6 +75,7 @@ const About = () => {
                     </div>
                 </div>
             </div>
+            <FooterComponent />
         </>
     );
 };
