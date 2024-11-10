@@ -23,10 +23,15 @@
     margin: 20px 0;
 }
 
-.footer-links p {
+.footer-link {
     font-size: 16px;
     color: #fff;
-    cursor: pointer;
+    text-decoration: none; /* Quitar subrayado */
+    cursor: pointer; /* Mostrar cursor de puntero */
+}
+
+.footer-link:hover {
+    color: #fff; /* No cambia de color al hacer hover */
 }
 
 .footer-icons {
