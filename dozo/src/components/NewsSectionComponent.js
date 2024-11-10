@@ -55,7 +55,7 @@ const NewsSectionComponent = () => {
             <div className="new-section-title">
                 <WhatsNewIcon />
             </div>
-            <p className="new-section-subtitle">Últimas noticias y temas</p>
+            <p className="new-section-subtitle">Últimas novedades y prendas</p>
             <div className="new-section-slider">
                 <div className="new-section-grid">
                     {visibleImages.map((image, index) => (

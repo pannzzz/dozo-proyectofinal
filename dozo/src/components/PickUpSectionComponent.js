@@ -138,7 +138,7 @@ const PickUpSectionComponent = () => {
                 <div className="underline"></div>
                 <PickupIcon />
             </div>
-            <p className="pickup-subtitle">¡Este es el mejor dózo del mes!</p>
+            <p className="pickup-subtitle">¡Este es el mejor dozo del mes!</p>
 
             <ul className="pickup-grid">
                 {visibleItems.map((item, index) => (
