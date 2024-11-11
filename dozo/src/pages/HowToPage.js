@@ -12,11 +12,9 @@ const HowToPage = () => {
         <>
         <div className="how-to-page">
             <Navbar initialScrolled={true} />
-            <div className="breadcrumb">
-                <a href="/" className="breadcrumb-home">dōzo</a> / Iniciar sesión
-            </div>
 
             <div className="how-to-header">
+            <a href="/" className="breadcrumb-home3">Dozo</a> / Iniciar sesión
                 <h3>IN YOUR STYLE</h3>
                 <div className="underline"></div>
                 <h1><HowToUseicon/></h1>

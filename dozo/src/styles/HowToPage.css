@@ -1,20 +1,9 @@
-/* Breadcrumb */
-.breadcrumb {
-    font-size: 14px;
-    color: #3a3a3a;
-    margin-top: 90px;
-    margin-bottom: 20px;
-    margin-left: 40px;
-    font-family: Arial, sans-serif;
-    
-}
-
-.breadcrumb-home {
+.breadcrumb-home3 {
     color: #3a3a3a;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
-    margin-left: -600px;
+    margin-left: -1000px;
 }
 
 /* Estilos para la página How To */
@@ -26,6 +15,7 @@
 .how-to-header {
     margin-bottom: 30px;
     text-align: center;
+    margin-top: 50px;
 }
 
 .how-to-header h2 {

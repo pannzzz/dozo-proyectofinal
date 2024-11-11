@@ -1,29 +1,25 @@
 /* Navegación de la página */
-.breadcrumb {
-    font-size: 14px;
-    color: #3a3a3a;
-    margin-top: 100px;
-    margin-bottom: 20px;
-    margin-left: 40px;
-    font-family: Arial, sans-serif;
-}
-
-.breadcrumb-home {
+.breadcrumb-home1 {
     color: #3a3a3a;
     text-decoration: none;
     font-weight: bold;
     cursor: pointer;
+    font-size: 14px;
+    color: #3a3a3a;
+    margin-top: 100px;
+    margin-bottom: 20px;
+    margin-left: -1000px;
+    font-family: Arial, sans-serif;
 }
 
-.breadcrumb-home:hover {
-    text-decoration: underline;
-}
+
 
 /* Contenedor principal de la página */
 .about-container {
     padding: 20px;
     font-family: Arial, sans-serif;
     text-align: center;
+    margin-top: 90px;
 }
 
 .about-container h3 {

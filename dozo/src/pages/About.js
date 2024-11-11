@@ -11,10 +11,8 @@ const About = () => {
     return (
         <>
             <Navbar initialScrolled={true} />
-            <div className="breadcrumb">
-                <a href="/" className="breadcrumb-home">Dozo</a> / Acerca de (¿Qué es dozo?)
-            </div>
             <div className="about-container">
+            <a href="/" className="breadcrumb-home1">Dozo</a> / Acerca de (¿Qué es dozo?)
                 <AboutIcon />
                 <h3>¿Qué es la dozo?</h3>
                 
