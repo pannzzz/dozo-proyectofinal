@@ -12,7 +12,7 @@ const FooterComponent = () => {
             </div>
 
             <div className="footer-links">
-                <Link to="/find-gift" className="footer-link">Encuentra tu estilo</Link>
+                <Link to="/findgift" className="footer-link">Encuentra tu estilo</Link>
                 <Link to="/About" className="footer-link">¿Qué es el dozo?</Link>
                 <Link to="/how-to" className="footer-link">Cómo usar dozo</Link>
                 <Link to="/login" className="footer-link">Inicio de sesión / Registro de nuevos miembros</Link>
