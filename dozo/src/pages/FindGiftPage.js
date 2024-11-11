@@ -5,6 +5,7 @@ import filterIcon from '../assets/icons/icon-toggle.svg'; // Ícono de filtro co
 import newIcon from '../assets/icons/icon-sort-new.png'; // Ícono de "New!" como imagen
 import BuscarIcon from '../assets/icons/search'; // Importa el ícono de "Buscar" como componente
 import '../styles/FindGiftPage.css';
+import Card from '../components/ProductCard';
 
 const FindGiftPage = () => {
     return (
@@ -39,6 +40,7 @@ const FindGiftPage = () => {
                 <div className="underline1"></div>
                 <h1><BuscarIcon /></h1>
             </div>
+            <Card />
         </div>
         </>
     );
