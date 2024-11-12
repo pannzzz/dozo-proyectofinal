@@ -9,20 +9,16 @@ import cat5 from '../assets/img-category/cat5.png';
 import cat6 from '../assets/img-category/cat6.png';
 import cat7 from '../assets/img-category/cat7.png';
 import cat8 from '../assets/img-category/cat8.png';
-import cat9 from '../assets/img-category/cat9.png';
-import cat10 from '../assets/img-category/cat10.png';
 
 const categories = [
     { src: cat1, label: "Camisetas" },
     { src: cat2, label: "Pantalones" },
     { src: cat3, label: "Camisas" },
     { src: cat4, label: "Accesorios" },
-    { src: cat5, label: "Oberoles" },
+    { src: cat5, label: "Overoles" },
     { src: cat6, label: "Chaquetas" },
     { src: cat7, label: "Faldas" },
-    { src: cat8, label: "Blusas" },
-    { src: cat9, label: "Packs" },
-    { src: cat10, label: "Shorts" }
+    { src: cat8, label: "Blusas" }
 ];
 
 const CategoryComponent = () => {
