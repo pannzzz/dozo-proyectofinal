@@ -1,9 +1,9 @@
 import React from 'react';
 import '../styles/ProductCard.css';
-import img1 from '../assets/img cards/1.png';
-import img2 from '../assets/img cards/2.png';
-import img3 from '../assets/img cards/3.png';
-import img4 from '../assets/img cards/4.png';
+import img1 from '../assets/img cards/camisa-rallas.png';
+import img2 from '../assets/img cards/camiseta1.png';
+import img3 from '../assets/img cards/short-estampado.png';
+import img4 from '../assets/img cards/short.png';
 
 const GoodsListFooter = ({ onShowMore }) => {
     return (
