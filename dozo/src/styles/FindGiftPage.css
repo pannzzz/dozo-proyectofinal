@@ -2,6 +2,17 @@
 .find-gift-page {
     text-align: center;
     background-color: #f7f5f5;
+    padding-top: 140px; /* Ajuste para compensar la altura de los navbars */
+}
+
+/* Navbar principal (ajusta su altura si es necesario) */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 70px; /* Ajusta según la altura de tu navbar principal */
+    background-color: #333; /* Ajusta el color si es necesario */
+    z-index: 1000;
 }
 
 /* Navbar secundario */
@@ -12,7 +23,10 @@
     background-color: #2d2d2d;
     color: white;
     padding: 20px 50px;
-    margin-top: 70px;
+    position: fixed;
+    top: 70px; /* Justo debajo del navbar principal */
+    width: 100%;
+    z-index: 999;
 }
 
 .sub-navbar h2 {
