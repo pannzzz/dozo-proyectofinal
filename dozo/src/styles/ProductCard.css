@@ -45,6 +45,7 @@
 }
 
 .image-container:hover .product-image {
+    
     transform: scale(1.05);
 }
 
