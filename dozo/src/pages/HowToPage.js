@@ -14,7 +14,7 @@ const HowToPage = () => {
             <Navbar initialScrolled={true} />
 
             <div className="how-to-header">
-            <a href="/" className="breadcrumb-home3">Dozo</a> / Iniciar sesión
+            <a href="/" className="breadcrumb-home3">Dozo</a> / Cómo usar el dozo
                 <h3>IN YOUR STYLE</h3>
                 <div className="underline"></div>
                 <h1><HowToUseicon/></h1>
