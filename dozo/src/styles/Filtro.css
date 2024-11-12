@@ -325,7 +325,7 @@
     box-sizing: border-box;
 }
 
-.add-searchDetail__submit {
+.botonn {
     font-family: inherit;
     line-height: inherit;
     pointer-events: all;
@@ -340,7 +340,7 @@
     margin-top: 30px;
 }
 
-.add-searchDetail__submit__button add-buttonCommon {
+.boton {
     pointer-events: all;
     border: 0 solid;
     border-style: solid;

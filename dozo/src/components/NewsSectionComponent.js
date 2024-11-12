@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
 import '../styles/newsection.css';
-import img1 from '../assets/img-newsection/sb_470x470_phpe6OdZe.png';
-import img2 from '../assets/img-newsection/sb_470x470_phpEZMzKA.png';
-import img3 from '../assets/img-newsection/sb_470x470_phpJxdfim.png';
-import img4 from '../assets/img-newsection/sb_470x470_phpm0K8c1.png';
-import img5 from '../assets/img-newsection/sb_470x470_phpUWfXRP.png';
-import img6 from '../assets/img-newsection/sb_470x470_phpvJyhsB.png';
-import img7 from '../assets/img-newsection/sb_470x470_phpZZvDz9.png';
+import img1 from '../assets/img-newsection/camiseta1.png';
+import img2 from '../assets/img-newsection/bolsa1.png';
+import img3 from '../assets/img-newsection/short1.png';
+import img4 from '../assets/img-newsection/blusa1.png';
+import img5 from '../assets/img-newsection/correa1.png';
+import img6 from '../assets/img-newsection/camiseta-sonic.png';
+import img7 from '../assets/img-newsection/chaqueta1.png';
+import img8 from '../assets/img-newsection/gafas1.png';
 import WhatsNewIcon from '../assets/whatsnewicon';
 
 const NewsSectionComponent = () => {
     const images = [
-        { src: img1, title: 'Le preguntamos a Haru. sobre todo lo relacionado con los regalos', date: '2024.10.21' },
-        { src: img2, title: 'dozo gana 🏆 el Good Design Award 2024', date: '2024.10.16' },
-        { src: img3, title: '¡El regalo perfecto para cada invitado! Dozo para boda 💍', date: '2024.10.15' },
-        { src: img4, title: '¿Qué tipo de servicio es dozo?', date: '2024.10.14' },
-        { src: img5, title: '¿Cual fue tu regalo favorito? Le preguntamos al fotografo Kyohei Hattori', date: '2024.10.13' },
-        { src: img6, title: 'Para regalos de boda y regalos para casas nuevas', date: '2024.10.12' },
-        { src: img7, title: 'Mi querida prefectura sin mar, Nagano Miyage Banashi', date: '2024.10.11' },
-        { src: img7, title: '¿Cual fue tu regalo favorito?', date: '2024.10.10' }
+        { src: img1, title: 'Camiseta casual ideal para el día a día.', date: '2024.10.21' },
+        { src: img2, title: 'Bolsa moderna y versátil para cualquier ocasión.', date: '2024.10.16' },
+        { src: img3, title: 'Short fresco y cómodo, perfecto para el verano.', date: '2024.10.15' },
+        { src: img4, title: 'Blusa de estilo urbano, perfecta para un look casual.', date: '2024.10.14' },
+        { src: img5, title: 'Correa de cuero de alta calidad para complementar tu outfit.', date: '2024.10.13' },
+        { src: img6, title: 'Camiseta de Sonic en edición limitada para los fans.', date: '2024.10.12' },
+        { src: img7, title: 'Chaqueta de invierno de Sonic cálida y a la moda.', date: '2024.10.11' },
+        { src: img8, title: 'Gafas de sol con diseño moderno y elegante.', date: '2024.10.10' }
     ];
 
     const [startIndex, setStartIndex] = useState(0);

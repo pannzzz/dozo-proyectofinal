@@ -59,7 +59,7 @@
                 <div className="add-searchDetail__groupBody">
                     <div className="add-tagList">
                     <ul>
-                        <li><a href="1" className="add-tagItem js-tagBtn">🍖 #グルメ</a></li>
+                        <li><a href="1" className="add-tagItem">🍖 #グルメ</a></li>
                         <li><a href="2" className="add-tagItem">#コーヒー y té ☕️</a></li>
                         <li><a href="3" className="add-tagItem">♨ #趣味グッズ</a></li>
                         <li><a href="4" className="add-tagItem">💁🏻♂️ #メンズギフト</a></li>
@@ -76,8 +76,8 @@
             </div>
 
             {/* Botón para aplicar filtros */}
-            <div className="add-searchDetail__submit">
-                <button type="button" className="add-searchDetail__submit__button add-buttonCommon">
+            <div className="botonn">
+                <button type="button" className="boton">
                 <span>ver con esta condición</span>
                 </button>
             </div>
