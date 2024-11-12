@@ -6,6 +6,7 @@ import newIcon from '../assets/icons/icon-sort-new.png';
 import BuscarIcon from '../assets/icons/search';
 import '../styles/FindGiftPage.css';
 import Card from '../components/ProductCard';
+import Filtro from '../components/filtro';
 
 const FindGiftPage = () => {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -36,35 +37,7 @@ const FindGiftPage = () => {
                     </div>
                 </div>
 
-                {isFilterModalOpen && (
-                    <div className="filter-modal">
-                        <button className="close-modal" onClick={toggleFilterModal}>×</button>
-                        <h2>104 Selección de temas</h2>
-                        <div className="filter-content">
-                            <div className="filter-section">
-                                <h3>Price</h3>
-                                <span>precio</span>
-                                {/* Aquí puedes añadir controles para el rango de precios */}
-                            </div>
-                            <div className="filter-section">
-                                <h3>Scene</h3>
-                                <span>escena</span>
-                                {/* Aquí puedes añadir opciones de escena */}
-                            </div>
-                            <div className="filter-section">
-                                <h3>Feeling</h3>
-                                <span>humor</span>
-                                {/* Aquí puedes añadir opciones de sentimiento */}
-                            </div>
-                            <div className="filter-section">
-                                <h3>Category</h3>
-                                <span>categoría</span>
-                                {/* Aquí puedes añadir categorías con etiquetas */}
-                            </div>
-                        </div>
-                        <button className="apply-filter-button">Exprimir por esta condición</button>
-                    </div>
-                )}
+                {isFilterModalOpen && <Filtro onClose={toggleFilterModal} />}
 
                 <div className="content">
                     <a href="/" className="breadcrumb-find">Dozo</a> / Encuentra un regalo
