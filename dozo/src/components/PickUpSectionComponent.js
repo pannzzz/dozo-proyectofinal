@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import '../styles/pickupsection.css';
-import img1 from '../assets/img-pick/img1.png';
-import img2 from '../assets/img-pick/img2.png';
-import img3 from '../assets/img-pick/img3.png';
-import img4 from '../assets/img-pick/img4.png';
-import img5 from '../assets/img-pick/img5.png';
-import img6 from '../assets/img-pick/img6.png';
-import img7 from '../assets/img-pick/img7.png';
-import img8 from '../assets/img-pick/img8.png';
-import img9 from '../assets/img-pick/img9.png';
-import img10 from '../assets/img-pick/img10.png';
-import img11 from '../assets/img-pick/img11.png';
-import img12 from '../assets/img-pick/img12.png';
+import img1 from '../assets/img-pick/anillo-pezcoy.png';
+import img2 from '../assets/img-pick/bolso-cafe-estrella.png';
+import img3 from '../assets/img-pick/bolso2.png';
+import img4 from '../assets/img-pick/camisa-lineas-colores.png';
+import img5 from '../assets/img-pick/camiseta-espiral.png';
+import img6 from '../assets/img-pick/gorro.png';
+import img7 from '../assets/img-pick/medias-pato.png';
+import img8 from '../assets/img-pick/pantalon-cafeyazul.png';
+import img9 from '../assets/img-pick/pantalon-fenix.png';
+import img10 from '../assets/img-pick/short-medio.png';
+import img11 from '../assets/img-pick/short2.png';
+import img12 from '../assets/img-pick/sueter-estrella.png';
 
 import PickupIcon from '../assets/pickupicon';
 
