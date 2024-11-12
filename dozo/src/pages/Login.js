@@ -34,7 +34,7 @@ const Login = () => {
             <Navbar initialScrolled={true} />
             <div className="login-container">
                 <div className="breadcrumb">
-                    <a href="/" className="breadcrumb-home">dōzo</a> / Iniciar sesión
+                    <a href="/" className="breadcrumb-home">Dozo</a> / Iniciar sesión
                 </div>
                 
                 {/* Contenedor escalado */}
