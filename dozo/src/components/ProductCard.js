@@ -12,38 +12,23 @@ const GoodsListFooter = ({ onShowMore }) => {
                 <button 
                     type="button" 
                     className="add-goodsList__more moreThemesButton" 
-                    onClick={onShowMore} 
-                    style={{
-                        background: 'transparent',
-                        border: `1px solid var(--color-small-button-text-border)`,
-                        color: 'var(--color-small-button-text-border)',
-                        borderRadius: '30px',
-                        fontSize: 'var(--text-base)',
-                        padding: '10px 20px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                    }}
-                >
+                    onClick={onShowMore}>
                     <span>Mostrar más</span>
                     <span style={{ marginLeft: '5px', fontSize: '12px' }}>▼</span>
                 </button>
             </div>
 
-            <div className="add-goodsList__info" style={{ display: 'flex', gap: '13px', alignItems: 'center', justifyContent: 'center', marginTop: '20px' }}>
+            <div className="add-goodsList__info">
                 <img 
                     src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-toggle.svg" 
                     alt="Toggle icon"
-                    style={{ width: '24px', height: '24px' }}
+                    className='imagen-filtro'
                 />
-                <div className="add-text">
-                    <p 
-                        className="add-text__emph" 
-                        style={{ fontWeight: 'var(--font-weight-body--bold)', color: 'var(--color-text)' }}
-                    >
-                        También puedes filtrar desde el botón de arriba.
+                <div className="add-text-texto">
+                    <p>
+                        Puedes filtrar desde el botón de arriba.
                     </p>
-                    <p style={{ color: 'var(--color-text-focus)' }}>Por precio, por categoría, por escena, etc.</p>
+                    <p>Por precio ypor categoría</p>
                 </div>
             </div>
         </div>
