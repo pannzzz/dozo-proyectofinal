@@ -32,19 +32,20 @@
     container-type: inline-size;
 }
 
-.image-container {
-    width: 140%;
+.imagen-container {
+    width: 100%;
     overflow: hidden;
+    border: 1px solid black;
 }
 
-.product-image {
+.product-imagen {
     width: 100%;
     height: auto;
     object-fit: cover;
     transition: transform 0.4s ease;
 }
 
-.image-container:hover .product-image {
+.imagen-container:hover .product-imagen {
     
     transform: scale(1.05);
 }
@@ -67,6 +68,8 @@
     text-overflow: ellipsis;
     min-height: 52px;
     margin-top: 14px;
+    text-align: left;
+
 }
 
 .product-card-info {
@@ -137,6 +140,7 @@
     letter-spacing: 0.041em;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    text-align: left;
 }
 
 .product-card-button {

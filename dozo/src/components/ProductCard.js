@@ -76,8 +76,8 @@ const ProductCardComponent = () => {
             <ul className="product-card-grid">
                 {items.map((item, index) => (
                     <li key={index} className="product-card">
-                        <div className="image-container">
-                            <img src={item.src} alt={item.title} className="product-image" />
+                        <div className="imagen-container">
+                            <img src={item.src} alt={item.title} className="product-imagen" />
                         </div>
                         <div className="product-card-title">{item.title}</div>
                         <div className="product-card-info">
