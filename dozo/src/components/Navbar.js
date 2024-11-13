@@ -66,10 +66,10 @@ const Navbar = ({ initialScrolled = false }) => {
 
                     <Link to="/login" className="login-link">INICIAR SESIÓN</Link>
 
-                    <div className="cart">
+                    <Link to="/carrito" className="cart">
                         <img src={cartIcon} alt="Carrito de compras" className="cart-icon" />
                         <span className="cart-count">0</span>
-                    </div>
+                    </Link>
 
                     <button className="menu-icon" onClick={toggleMenu}>
                         <i className="bi bi-list"></i>

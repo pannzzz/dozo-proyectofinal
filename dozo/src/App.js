@@ -8,6 +8,8 @@ import HowToPage from './pages/HowToPage';
 import Login from './pages/Login';
 import Register from './pages/Register'; // Importa el componente de registro
 import FindGiftPage from './pages/FindGiftPage';
+import Carrito from './components/carritocomponent';
+import Pagos from './pages/pagos';
 import './App.css';
 
 const App = () => {
@@ -21,6 +23,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} /> {/* Nueva ruta de registro */}
           <Route path="/findgift" element={<FindGiftPage />} /> {/* Nueva ruta para encontrar regalos */}
+          <Route path="/carrito" element={<Carrito />} /> {/* Nueva ruta para el carrito */}
+          <Route path="/pagos" element={<Pagos />} /> {/* Nueva ruta para los pagos */}
         </Routes>
       </div>
     </Router>

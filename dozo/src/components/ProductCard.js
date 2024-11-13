@@ -14,7 +14,7 @@ const GoodsListFooter = ({ onShowMore }) => {
                     className="add-goodsList__more moreThemesButton" 
                     onClick={onShowMore}>
                     <span>Mostrar más</span>
-                    <span style={{ marginLeft: '5px', fontSize: '12px' }}>▼</span>
+                    <span style={{ marginLeft: '7px', fontSize: '18px' }}><i class="bi bi-chevron-down"></i></span>
                 </button>
             </div>
 
