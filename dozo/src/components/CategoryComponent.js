@@ -1,14 +1,14 @@
 import React from 'react';
 import '../styles/category.css';
 import CategoryIcon from '../assets/categoryicon'; // Importa el componente
-import cat1 from '../assets/img-category/cat1.png';
-import cat2 from '../assets/img-category/cat2.png';
-import cat3 from '../assets/img-category/cat3.png';
-import cat4 from '../assets/img-category/cat4.png';
-import cat5 from '../assets/img-category/cat5.png';
-import cat6 from '../assets/img-category/cat6.png';
-import cat7 from '../assets/img-category/cat7.png';
-import cat8 from '../assets/img-category/cat8.png';
+import cat1 from '../assets/img-category/camisetas.png';
+import cat2 from '../assets/img-category/pantalones.png';
+import cat3 from '../assets/img-category/camisas.png';
+import cat4 from '../assets/img-category/accesorios.png';
+import cat5 from '../assets/img-category/overoles.png';
+import cat6 from '../assets/img-category/chaquetas.png';
+import cat7 from '../assets/img-category/faldas.png';
+import cat8 from '../assets/img-category/blusas.png';
 
 const categories = [
     { src: cat1, label: "Camisetas" },
