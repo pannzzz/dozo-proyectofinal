@@ -1,5 +1,5 @@
-from django.contrib.auth.models import AbstractUser # type: ignore
 from django.db import models # type: ignore
+from django.contrib.auth.models import AbstractUser # type: ignore
 
 class CustomUser(AbstractUser):
     ROLE_CHOICES = [
@@ -13,8 +13,7 @@ class CustomUser(AbstractUser):
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name="Ciudad")
     address = models.TextField(blank=True, null=True, verbose_name="Dirección")
     postal_code = models.CharField(max_length=20, blank=True, null=True, verbose_name="Código Postal")
-    
-    # Relaciones ManyToMany
+
     groups = models.ManyToManyField(
         'auth.Group',
         related_name='customuser_set',
@@ -31,3 +30,57 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return f"{self.username} ({self.email})"
+
+class Categoria(models.Model):
+    nombre = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.nombre
+
+class Producto(models.Model):
+    imagen = models.ImageField(upload_to='productos/')
+    titulo = models.CharField(max_length=200)
+    descripcion = models.TextField()
+    talla = models.CharField(max_length=50)
+    precio = models.DecimalField(max_digits=10, decimal_places=2)
+    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    estado = models.BooleanField(default=True)  # Activo o inactivo
+
+    def __str__(self):
+        return self.titulo
+
+class ImagenProducto(models.Model):
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes')
+    imagen = models.ImageField(upload_to='imagenes_productos/')
+
+class Estado(models.Model):
+    nombre = models.CharField(max_length=50)  # Ej: "En proceso", "Enviado", etc.
+
+    def __str__(self):
+        return self.nombre
+
+class Venta(models.Model):
+    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    fecha_venta = models.DateTimeField(auto_now_add=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
+    estado = models.ForeignKey(Estado, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Venta {self.id} - Usuario {self.usuario}"
+
+class VentaProducto(models.Model):
+    venta = models.ForeignKey(Venta, on_delete=models.CASCADE, related_name='productos')
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    precio_unidad = models.DecimalField(max_digits=10, decimal_places=2)
+    cantidad = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.producto.titulo} x {self.cantidad}"
+
+class Carrito(models.Model):
+    usuario = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
+    cantidad = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"Carrito de {self.usuario} - {self.producto.titulo} x {self.cantidad}"
