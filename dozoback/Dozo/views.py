@@ -171,44 +171,78 @@ def eliminar_producto(request, producto_id):
 
 
 # Categoria Views
+# Mostrar categorías
 def mostrar_categoria(request):
     categorias = Categoria.objects.all()
-    return render(request, 'categoria_list.html', {
+    return render(request, 'categorias/categoria_list.html', {
         'categorias': categorias
     })
 
+# Crear una nueva categoría
 def crear_categoria(request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('mostrar_categoria')
+            try:
+                form.save()
+                return redirect('mostrar_categoria')
+            except Exception as e:
+                return render(request, 'categorias/categoria_create.html', {
+                    'form': form,
+                    'error': f"Error al crear la categoría: {str(e)}"
+                })
+        else:
+            return render(request, 'categorias/categoria_create.html', {
+                'form': form,
+                'error': "Hay errores en la información ingresada. Por favor, revisa los campos."
+            })
     else:
         form = CategoriaForm()
-    return render(request, 'categoria_form.html', {
-        'form': form
-    })
+        return render(request, 'categorias/categoria_create.html', {
+            'form': form
+        })
 
+# Editar una categoría
 def editar_categoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
     if request.method == 'POST':
         form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
-            form.save()
-            return redirect('mostrar_categoria')
+            try:
+                form.save()
+                return redirect('mostrar_categoria')
+            except Exception as e:
+                return render(request, 'categorias/categoria_edit.html', {
+                    'form': form,
+                    'categoria': categoria,
+                    'error': f"Error al actualizar la categoría: {str(e)}"
+                })
+        else:
+            return render(request, 'categorias/categoria_edit.html', {
+                'form': form,
+                'categoria': categoria,
+                'error': "Hay errores en la información ingresada. Por favor, revisa los campos."
+            })
     else:
         form = CategoriaForm(instance=categoria)
-    return render(request, 'categoria_form.html', {
-        'form': form,
-        'categoria': categoria
-    })
-    
+        return render(request, 'categorias/categoria_edit.html', {
+            'form': form,
+            'categoria': categoria
+        })
+
+# Eliminar una categoría
 def eliminar_categoria(request, categoria_id):
     categoria = get_object_or_404(Categoria, id=categoria_id)
     if request.method == 'POST':
-        categoria.delete()
-        return redirect('mostrar_categoria')
-    return render(request, 'categoria_confirm_delete.html', {
+        try:
+            categoria.delete()
+            return redirect('mostrar_categoria')
+        except Exception as e:
+            return render(request, 'categorias/categoria_delete.html', {
+                'categoria': categoria,
+                'error': f"Error al eliminar la categoría: {str(e)}"
+            })
+    return render(request, 'categorias/categoria_delete.html', {
         'categoria': categoria
     })
 

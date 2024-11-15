@@ -39,20 +39,23 @@ class Categoria(models.Model):
         return self.nombre
 
 class Producto(models.Model):
-    imagen = models.ImageField(upload_to='productos/')
+    TALLA_CHOICES = [
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large'),
+    ]
+    imagen = models.ImageField(upload_to='Dozo/images/',null=True,default='entrevista_cambot_trabajo_remoto.png')
     titulo = models.CharField(max_length=200)
     descripcion = models.TextField()
-    talla = models.CharField(max_length=50)
+    talla = models.CharField(max_length=2, choices=TALLA_CHOICES)
     precio = models.DecimalField(max_digits=10, decimal_places=2)
-    categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    categoria = models.ForeignKey('Categoria', on_delete=models.CASCADE, null=True, blank=True)
     estado = models.BooleanField(default=True)  # Activo o inactivo
 
     def __str__(self):
         return self.titulo
-
-class ImagenProducto(models.Model):
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, related_name='imagenes')
-    imagen = models.ImageField(upload_to='imagenes_productos/')
+    
 
 class Estado(models.Model):
     nombre = models.CharField(max_length=50)  # Ej: "En proceso", "Enviado", etc.
