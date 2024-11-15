@@ -13,6 +13,7 @@ class CustomUser(AbstractUser):
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name="Ciudad")
     address = models.TextField(blank=True, null=True, verbose_name="Dirección")
     postal_code = models.CharField(max_length=20, blank=True, null=True, verbose_name="Código Postal")
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default=' ')
 
     groups = models.ManyToManyField(
         'auth.Group',

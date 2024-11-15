@@ -7,7 +7,7 @@ class CustomUserCreationForm(UserCreationForm):
         model = CustomUser
         fields = (
             'username', 'email', 'first_name', 'last_name', 
-            'department', 'city', 'address', 'postal_code', 'password1', 'password2'
+            'department', 'city', 'address', 'postal_code', 'password1', 'password2', 'role'
         )
 
 class CustomUserChangeForm(UserChangeForm):
@@ -15,7 +15,7 @@ class CustomUserChangeForm(UserChangeForm):
         model = CustomUser
         fields = (
             'username', 'email', 'first_name', 'last_name', 
-            'department', 'city', 'address', 'postal_code'
+            'department', 'city', 'address', 'postal_code','role'
         )
 
 class ProductoForm(forms.ModelForm):
