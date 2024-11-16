@@ -1,58 +1,87 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css'; // Importar Bootstrap Icons
 import '../styles/SideMenu.css';
 
 const SideMenu = ({ closeMenu }) => {
-    const [isGiftMenuOpen, setIsGiftMenuOpen] = useState(false);
+    const [user, setUser] = useState(null); // Estado para el usuario autenticado
 
-    const toggleGiftMenu = () => {
-        setIsGiftMenuOpen(!isGiftMenuOpen);
+    useEffect(() => {
+        // Obtener usuario desde localStorage
+        const loggedUser = localStorage.getItem('user');
+        if (loggedUser) {
+            setUser(JSON.parse(loggedUser));
+        }
+    }, []);
+
+    const handleLogout = () => {
+        // Eliminar datos del usuario de localStorage
+        localStorage.removeItem('user');
+        setUser(null); // Actualizar estado del usuario
+        closeMenu(); // Cerrar el menú lateral
+        window.location.reload(); // Opcional, para recargar la página
     };
 
     return (
         <>
             <div className="menu-overlay" onClick={closeMenu}></div>
-            
+            <div class="add-globalMenu__inner">
             <div className="side-menu">
                 <button className="close-button" onClick={closeMenu}>✕</button>
-                <ul className="main-menu">
-                    <li>
-                        <div className="menu-item" onClick={toggleGiftMenu}>
-                            <i className="bi bi-search menu-icon"></i>
-                            <span>Encuentra un estilo</span>
-                            <i className={`bi ${isGiftMenuOpen ? 'bi-chevron-down' : 'bi-chevron-right'} arrow`}></i>
-                        </div>
-                        <div className={`submenu ${isGiftMenuOpen ? 'open' : ''}`}>
-                            <div className="search-bar">
-                                <input type="text" placeholder="Búsqueda por palabra clave" />
-                            </div>
-                            <ul className="price-range">
-                                <li><a href="/#">Ver todos las categorias</a></li>
-                                <li><a href="/#">~29999cop</a></li>
-                                <li><a href="/#">30000~40000 cop</a></li>
-                                <li><a href="/#">50000~99999 cop</a></li>
-                                <li><a href="/#">100000 cop~</a></li>
-                            </ul>
-                        </div>
+                <div className='add-globalMenu__contents'>
+                    <div className=''>
+                <ul className="add-globalMenu__list01">
+                    <li className='unu'>
+                    <div class="add-globalMenu__list__inner">
+                    <a href="/findgift" className="add-globalMenu__list01__link">
+                    <img 
+                        src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-search.svg" 
+                        alt="Buscar icono"/>
+                    <span> Encuentra un estilo</span>                                                      <i className="bi bi-chevron-right arrow"></i>
+                    </a>
+                    </div>
                     </li>
-                    <li>
-                        <a href="/about">
-                            <i className="bi bi-question-circle menu-icon"></i>
-                            ¿Qué es el dōzo?<i className="bi bi-chevron-right arrow"></i>
+
+
+                    <li className='unu2'>
+                        <a href="/about" className="add-globalMenu__list01__link">
+                        <img 
+                            src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-question.svg" 
+                            alt="Ícono de pregunta" 
+                        />
+                        <span>¿Qué es el dōzo?</span>
+                        <i className="bi bi-chevron-right arrow"></i>
                         </a>
                     </li>
-                    <li>
-                        <a href="/howto">
-                            <i className="bi bi-gift menu-icon"></i>
-                            Cómo usar dōzo<i className="bi bi-chevron-right arrow"></i>
-                        </a>
+
+
+                    <li className='unu3'>
+                    <a href="/howto" className="add-globalMenu__list01__link">
+                    <img 
+                        src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-present.png" 
+                        alt="Ícono de regalo" 
+                    />
+                    <span>Cómo usar dozo</span><i className="bi bi-chevron-right arrow"></i>
+                    </a>
                     </li>
                 </ul>
+                </div>
                 <ul className="secondary-menu">
-                    <li><a href="/login">Iniciar sesión</a></li>
-                    <li><a href="/register">Registro de nuevos miembros</a></li>
+                    {user ? (
+                        <>
+                            <li><span className="user-info">Hola, {user.username}</span></li>
+                            <li><button className="logout-button" onClick={handleLogout}>Cerrar sesión</button></li>
+                        </>
+                    ) : (
+                        <>
+                            <li><a href="/login">Iniciar sesión</a></li>
+                            <li><a href="/register">Registro de nuevos miembros</a></li>
+                        </>
+                    )}
                 </ul>
+                </div>
+
+            </div>
             </div>
         </>
     );

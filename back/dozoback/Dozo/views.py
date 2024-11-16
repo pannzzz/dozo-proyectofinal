@@ -74,6 +74,8 @@ def eliminar_user(request, user_id):
         'user': user
     })
 
+
+@csrf_exempt
 def loginzzz(request):
     if request.method == "POST":
         try:
@@ -84,7 +86,8 @@ def loginzzz(request):
 
             User = get_user_model()
             try:
-                user = User.objects.get(email=email)  # Buscar usuario por email
+                # Buscar usuario por email
+                user = User.objects.get(email=email)
             except User.DoesNotExist:
                 return JsonResponse({'error': 'El usuario no existe'}, status=400)
 
@@ -94,12 +97,22 @@ def loginzzz(request):
 
             # Iniciar sesión
             login(request, user)
-            return JsonResponse({'message': 'Inicio de sesión exitoso', 'user': user.username}, status=200)
+
+            # Responder con detalles del usuario
+            return JsonResponse({
+                'message': 'Inicio de sesión exitoso',
+                'user': {
+                    'username': user.username,
+                    'email': user.email,
+                    # Incluye otros campos si es necesario, como nombre completo, roles, etc.
+                }
+            }, status=200)
 
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Datos inválidos'}, status=400)
-    
+
     return JsonResponse({'error': 'Método no permitido'}, status=405)
+
 
 def logout(request):
     auth_logout(request)

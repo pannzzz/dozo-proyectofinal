@@ -10,6 +10,15 @@ import logo from '../assets/logo.svg';
 const Navbar = ({ initialScrolled = false }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(initialScrolled);
+    const [user, setUser] = useState(null); // Estado para manejar el usuario
+
+    useEffect(() => {
+        // Obtener usuario desde localStorage
+        const loggedUser = localStorage.getItem('user');
+        if (loggedUser) {
+            setUser(JSON.parse(loggedUser));
+        }
+    }, []);
 
     const toggleMenu = () => {
         setMenuOpen(!menuOpen);
@@ -64,7 +73,12 @@ const Navbar = ({ initialScrolled = false }) => {
                         <span>Encuentra tu estilo</span>
                     </Link>
 
-                    <Link to="/login" className="login-link">INICIAR SESIÓN</Link>
+                    {/* Mostrar nombre del usuario o botón de inicio de sesión */}
+                    {user ? (
+                        <span className="login-link">Hola, {user.username}</span>
+                    ) : (
+                        <Link to="/login" className="login-link">INICIAR SESIÓN</Link>
+                    )}
 
                     <Link to="/carrito" className="cart">
                         <img src={cartIcon} alt="Carrito de compras" className="cart-icon" />
@@ -78,7 +92,7 @@ const Navbar = ({ initialScrolled = false }) => {
             </div>
 
             {menuOpen && <SideMenu closeMenu={toggleMenu} />}
-        </div>
+            </div>
     );
 };
 

@@ -6,97 +6,356 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    z-index: 200;
+    z-index: 1000;
     transition: opacity 0.3s ease;
 }
 
-/* Menú lateral */
-.side-menu {
+.add-globalMenu__inner {
+    border: 0 solid;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
     position: fixed;
     top: 0;
     right: 0;
-    width: 320px;
+    width: 100%;
+    max-width: 420px;
     height: 100%;
-    background-color: #f5f5f5;
-    padding: 60px 30px 20px;
-    z-index: 300;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-    font-family: 'Noto Sans JP', sans-serif;
+    overflow-y: scroll;
+    background-color: #EBE7E7;
+    z-index: 1000;
+    padding: 0;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s, translate 0.8s;
+    translate: 0 0;
+    visibility: visible;
+    border: 0 solid;
+    --tw-border-opacity: 1;
+    border-color: rgba(242,242,239,var(--tw-border-opacity));
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+    padding: 65px 40px 30px 45px;
 }
 
+.add-globalMenu__contents {
+    visibility: visible;
+    border: 0 solid;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+}
+
+.add-globalMenu__list01 {
+    visibility: visible;
+    border: 0 solid;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.unu {
+    visibility: visible;
+    list-style: none;
+    border: 0 solid;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+}
+
+
+
+.add-globalMenu__list01__link {
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 13px 0 14px;
+    border-bottom: none;
+}
+
+.img {
+    visibility: visible;
+    list-style: none;
+    color: inherit;
+    cursor: pointer;
+    border: 0 solid;
+    border-width: 0;
+    box-sizing: border-box;
+    border-style: solid;
+    display: block;
+    height: auto;
+    max-width: 100%;
+    vertical-align: bottom;
+    width: 24px;
+    margin-right: 16px;
+}
+
+.unu2 {
+    tab-size: 4;
+    -webkit-tap-highlight-color: transparent;
+    --color-text: #3a3a3a;
+    --color-text-rgb: 58, 58, 58;
+    --color-body-text: #333232;
+    --color-sale-text: #EA0606;
+    --color-small-button-text-border: #3a3a3a;
+    --color-text-field: #ffffff;
+    --color-text-field-text: #000000;
+    --color-text-field-text-rgb: 0, 0, 0;
+    --color-btn-primary: #3a3a3a;
+    --color-btn-primary-darker: #212121;
+    --color-btn-primary-text: #ffffff;
+    --color-blankstate: rgba(51, 50, 50, 0.35);
+    --color-blankstate-border: rgba(51, 50, 50, 0.2);
+    --color-blankstate-background: rgba(51, 50, 50, 0.1);
+    --color-text-focus: #606060;
+    --color-overlay-text-focus: #e6e6e6;
+    --color-btn-primary-focus: #606060;
+    --color-btn-social-focus: #d2d2d2;
+    --color-small-button-text-border-focus: #606060;
+    --predictive-search-focus: #f2f2f2;
+    --color-body: #ffffff;
+    --color-bg: #ffffff;
+    --color-bg-rgb: 255, 255, 255;
+    --color-bg-alt: rgba(51, 50, 50, 0.05);
+    --color-bg-currency-selector: rgba(51, 50, 50, 0.2);
+    --color-overlay-title-text: #ffffff;
+    --color-image-overlay: #685858;
+    --color-image-overlay-rgb: 104, 88, 88;
+    --opacity-image-overlay: 0.4;
+    --hover-overlay-opacity: 0.8;
+    --color-border: #ebebeb;
+    --color-border-form: #cccccc;
+    --color-border-form-darker: #b3b3b3;
+    --svg-select-icon: url(//dozo-gift.com/cdn/shop/t/2/assets/ico-select.svg?v=29003672709104678581649018828);
+    --slick-img-url: url(//dozo-gift.com/cdn/shop/t/2/assets/ajax-loader.gif?v=41356863302472015721649018763);
+    --font-weight-body--bold: 700;
+    --font-weight-body--bolder: 700;
+    --font-stack-header: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+    --font-style-header: normal;
+    --font-weight-header: 700;
+    --font-stack-body: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+    --font-style-body: normal;
+    --font-weight-body: 400;
+    --font-size-header: 26;
+    --font-size-base: 15;
+    --font-h1-desktop: 35;
+    --font-h1-mobile: 32;
+    --font-h2-desktop: 20;
+    --font-h2-mobile: 18;
+    --font-h3-mobile: 20;
+    --font-h4-desktop: 17;
+    --font-h4-mobile: 15;
+    --font-h5-desktop: 15;
+    --font-h5-mobile: 13;
+    --font-h6-desktop: 14;
+    --font-h6-mobile: 12;
+    --font-mega-title-large-desktop: 65;
+    --font-rich-text-large: 17;
+    --font-rich-text-small: 13;
+    --color-video-bg: #f2f2f2;
+    --global-color-image-loader-primary: rgba(58, 58, 58, 0.06);
+    --global-color-image-loader-secondary: rgba(58, 58, 58, 0.12);
+    --inner-width: 1234px;
+    --inner-padding: 30px;
+    --transition-duration: .3s;
+    --breakpoint-sp: 767px;
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 18px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+    --font-futura: futura-pt, sans-serif;
+    --font-en: var(--font-futura);
+    --font-en-headding: "Futura PT", sans-serif;
+    --color-main: #53C197;
+    --color-base-glay: #EBE7E7;
+    --color-base-green: #5FD8AA;
+    --color-base-blue: #9CD5EA;
+    --color-base-skyblue: #8FCFE6;
+    --color-base-orange: #F0A15E;
+    --color-accent-red: #ED3288;
+    --color-accent-yellow: #F3E84D;
+    --header-height: 98px;
+    --scrollbar-width: 15px;
+    font-family: inherit;
+    line-height: inherit;
+    -webkit-font-smoothing: inherit;
+    -webkit-text-size-adjust: inherit;
+    visibility: visible;
+    list-style: none;
+    border: 0 solid;
+    --tw-border-opacity: 1;
+    border-color: rgba(242,242,239,var(--tw-border-opacity));
+    --tw-shadow: 0 0 #0000;
+    --tw-ring-inset: var(--tw-empty,   );
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59,130,246,.5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+}
+
+.add-globalMenu__list01__link {
+    tab-size: 4;
+    -webkit-tap-highlight-color: transparent;
+    --color-text: #3a3a3a;
+    --color-text-rgb: 58, 58, 58;
+    --color-body-text: #333232;
+    --color-sale-text: #EA0606;
+    --color-small-button-text-border: #3a3a3a;
+    --color-text-field: #ffffff;
+    --color-text-field-text: #000000;
+    --color-text-field-text-rgb: 0, 0, 0;
+    --color-btn-primary: #3a3a3a;
+    --color-btn-primary-darker: #212121;
+    --color-btn-primary-text: #ffffff;
+    --color-blankstate: rgba(51, 50, 50, 0.35);
+    --color-blankstate-border: rgba(51, 50, 50, 0.2);
+    --color-blankstate-background: rgba(51, 50, 50, 0.1);
+    --color-text-focus: #606060;
+    --color-overlay-text-focus: #e6e6e6;
+    --color-btn-primary-focus: #606060;
+    --color-btn-social-focus: #d2d2d2;
+    --color-small-button-text-border-focus: #606060;
+    --predictive-search-focus: #f2f2f2;
+    --color-body: #ffffff;
+    --color-bg: #ffffff;
+    --color-bg-rgb: 255, 255, 255;
+    --color-bg-alt: rgba(51, 50, 50, 0.05);
+    --color-bg-currency-selector: rgba(51, 50, 50, 0.2);
+    --color-overlay-title-text: #ffffff;
+    --color-image-overlay: #685858;
+    --color-image-overlay-rgb: 104, 88, 88;
+    --opacity-image-overlay: 0.4;
+    --hover-overlay-opacity: 0.8;
+    --color-border: #ebebeb;
+    --color-border-form: #cccccc;
+    --color-border-form-darker: #b3b3b3;
+    --svg-select-icon: url(//dozo-gift.com/cdn/shop/t/2/assets/ico-select.svg?v=29003672709104678581649018828);
+    --slick-img-url: url(//dozo-gift.com/cdn/shop/t/2/assets/ajax-loader.gif?v=41356863302472015721649018763);
+    --font-weight-body--bold: 700;
+    --font-weight-body--bolder: 700;
+    --font-stack-header: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+    --font-style-header: normal;
+    --font-weight-header: 700;
+    --font-stack-body: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+    --font-style-body: normal;
+    --font-weight-body: 400;
+    --font-size-header: 26;
+    --font-size-base: 15;
+    --font-h1-desktop: 35;
+    --font-h1-mobile: 32;
+    --font-h2-desktop: 20;
+    --font-h2-mobile: 18;
+    --font-h3-mobile: 20;
+    --font-h4-desktop: 17;
+    --font-h4-mobile: 15;
+    --font-h5-desktop: 15;
+    --font-h5-mobile: 13;
+    --font-h6-desktop: 14;
+    --font-h6-mobile: 12;
+    --font-mega-title-large-desktop: 65;
+    --font-rich-text-large: 17;
+    --font-rich-text-small: 13;
+    --color-video-bg: #f2f2f2;
+    --global-color-image-loader-primary: rgba(58, 58, 58, 0.06);
+    --global-color-image-loader-secondary: rgba(58, 58, 58, 0.12);
+    --inner-width: 1234px;
+    --inner-padding: 30px;
+    --transition-duration: .3s;
+    --breakpoint-sp: 767px;
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 18px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+    --font-futura: futura-pt, sans-serif;
+    --font-en: var(--font-futura);
+    --font-en-headding: "Futura PT", sans-serif;
+    --color-main: #53C197;
+    --color-base-glay: #EBE7E7;
+    --color-base-green: #5FD8AA;
+    --color-base-blue: #9CD5EA;
+    --color-base-skyblue: #8FCFE6;
+    --color-base-orange: #F0A15E;
+    --color-accent-red: #ED3288;
+    --color-accent-yellow: #F3E84D;
+    --header-height: 98px;
+    --scrollbar-width: 15px;
+    font-family: inherit;
+    line-height: inherit;
+    -webkit-font-smoothing: inherit;
+    -webkit-text-size-adjust: inherit;
+    visibility: visible;
+    list-style: none;
+    border: 0 solid;
+    --tw-border-opacity: 1;
+    border-color: rgba(242,242,239,var(--tw-border-opacity));
+    --tw-shadow: 0 0 #0000;
+    --tw-ring-inset: var(--tw-empty,   );
+    --tw-ring-offset-width: 0px;
+    --tw-ring-offset-color: #fff;
+    --tw-ring-color: rgba(59,130,246,.5);
+    --tw-ring-offset-shadow: 0 0 #0000;
+    --tw-ring-shadow: 0 0 #0000;
+    border-style: solid;
+    border-width: 0;
+    box-sizing: border-box;
+    background-color: transparent;
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: 13px 0 14px;
+    border-bottom: 1px solid;
+}
+
+
+
+
+
+/* Menú lateral */
+
+
 /* Lista principal y secundaria */
-.main-menu, .secondary-menu {
+.secondary-menu {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.main-menu li, .secondary-menu li {
+.secondary-menu li {
     margin: 15px 0;
     font-size: 16px;
     padding-bottom: 10px;
     color: #333;
 }
 
-/* Estilo de cada elemento de menú con iconos */
-.menu-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 16px;
-    color: #333;
-    padding: 10px 0;
-}
-
-/* Iconos en el menú principal */
-.menu-icon {
-    margin-right: 12px;
-    margin-top: 20px; /* Baja el icono 20px */
-    color: #3a3a3a;
-    font-size: 20px;
-}
-
 /* Flecha de despliegue */
 .arrow {
-    font-size: 18px; /* Tamaño de la flecha */
-    color: #3a3a3a;
-    margin-left: auto;
-    margin-right: 8px; /* Espacio consistente desde el borde derecho */
-}
-
-/* Barra de búsqueda en el submenú */
-.search-bar {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.search-bar input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    font-size: 16px;
+    font-size: 18px;
     color: #333;
-    background-color: #f5f5f5;
+    margin-left: auto;
 }
 
 /* Ajustes para que el submenú no desacomode el resto del contenido */
 .submenu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease;
-    padding-left: 30px;
-    color: #333;
-}
-
-.submenu.open {
-    max-height: 200px;
+    display: none; /* Submenú deshabilitado */
 }
 
 .price-range {
@@ -106,22 +365,21 @@
 }
 
 .price-range li {
-    font-size: 16px;
+    font-size: 14px;
     margin: 5px 0;
-    color: #333;
+    color: #555;
 }
 
 .price-range li a {
-    color: #333;
+    color: #555;
     text-decoration: none;
-    font-weight: normal;
 }
 
 /* Sección secundaria (Iniciar sesión y abajo) */
 .secondary-menu {
-    font-size: 13px;
+    font-size: 14px;
     color: #333;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #eaeaea;
     padding-top: 15px;
 }
 
@@ -134,7 +392,7 @@
     color: #333;
     text-decoration: none;
     font-weight: normal;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 /* Botón de cierre */
@@ -144,7 +402,28 @@
     font-size: 24px;
     cursor: pointer;
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 15px;
+    right: 15px;
     color: #333;
+}
+
+.user-info {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.logout-button {
+    background-color: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    text-align: left;
+    padding: 0;
+    font-size: 16px;
+}
+
+.logout-button:hover {
+    color: #6a6e72;
+    text-decoration: underline;
 }

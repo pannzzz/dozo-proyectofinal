@@ -44,9 +44,12 @@ const Login = () => {
                 }
             );
 
+            // Guardar información del usuario en localStorage
+            localStorage.setItem('user', JSON.stringify(response.data.user));
+
             // Redirigir al usuario en caso de éxito
             console.log('Inicio de sesión exitoso:', response.data);
-            navigate('/'); // Cambia "/dashboard" por la ruta deseada
+            navigate('/'); // Cambia la ruta por la deseada
         } catch (error) {
             console.error('Error al iniciar sesión:', error);
             setShowError(true);
