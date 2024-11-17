@@ -8,6 +8,7 @@ import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model
+
 # User Views
 def registro(request):
     if request.method == 'POST':
@@ -378,3 +379,17 @@ def eliminar_venta(request, venta_id):
         'venta': venta
     })
 
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from .models import Producto
+from .serializers import ProductoSerializer
+
+class ProductoListAPIView(APIView):
+    def get(self, request, *args, **kwargs):
+        productos = Producto.objects.filter(estado=True)  # Solo productos activos
+        serializer = ProductoSerializer(productos, many=True)
+        return Response(serializer.data)
+    
+    

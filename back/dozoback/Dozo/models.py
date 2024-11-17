@@ -32,6 +32,8 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return f"{self.username} ({self.email})"
 
+from django.db import models
+
 class Categoria(models.Model):
     nombre = models.CharField(max_length=100)
 
@@ -45,7 +47,7 @@ class Producto(models.Model):
         ('L', 'L'),
         ('XL', 'XL'),
     ]
-    imagen = models.ImageField(upload_to='Dozo/images/',null=True,default='entrevista_cambot_trabajo_remoto.png')
+    imagen = models.ImageField(upload_to='Dozo/images/', null=True, default='default.png')
     titulo = models.CharField(max_length=200)
     descripcion = models.TextField()
     talla = models.CharField(max_length=2, choices=TALLA_CHOICES)
@@ -55,6 +57,7 @@ class Producto(models.Model):
 
     def __str__(self):
         return self.titulo
+
     
 
 class Estado(models.Model):

@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Dozo',
-    'corsheaders'
+    'corsheaders',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -60,6 +61,8 @@ CORS_ALLOW_CREDENTIALS =True
 CSRF_TRUSTED_ORIGINS = [
     'http://localhost:3000'
 ]
+
+
 
 
 
