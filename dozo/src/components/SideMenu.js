@@ -58,10 +58,31 @@ const SideMenu = ({ closeMenu }) => {
                     <li className='unu3'>
                     <a href="/howto" className="add-globalMenu__list01__link">
                     <img 
-                        src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-present.png" 
-                        alt="Ícono de regalo" 
+                        src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-magazine.svg" 
+                        alt="Ícono de regalo " className='imagen-regalo' 
                     />
                     <span>Cómo usar dozo</span><i className="bi bi-chevron-right arrow"></i>
+                    </a>
+                    </li>
+
+
+                    <li className='unu3'>
+                    <a href="/favoritos" className="add-globalMenu__list01__link">
+                    <img 
+                        src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-brush.svg" 
+                        alt="Ícono de regalo " className='imagen-regalo' 
+                    />
+                    <span>Tus favoritos</span><i className="bi bi-chevron-right arrow"></i>
+                    </a>
+                    </li>
+
+                    <li className='unu3'>
+                    <a href="/pedidos" className="add-globalMenu__list01__link">
+                    <img 
+                        src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-present.png" 
+                        alt="Ícono de regalo " className='imagen-regalo' 
+                    />
+                    <span>Tus pedidos</span><i className="bi bi-chevron-right arrow"></i>
                     </a>
                     </li>
                 </ul>
