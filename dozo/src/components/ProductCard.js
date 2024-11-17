@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/ProductCard.css';
 import { Link } from 'react-router-dom';
-import { useCart } from './CartContext'; // Importar el contexto del carrito
+import { useCart } from './CartContext';
 
-const GoodsListFooter = ({ onShowMore }) => {
+const GoodsListFooter = ({ onToggleShow, showAll }) => {
     return (
         <div className="add-goodsList__footer">
             <div className="moreThemesButtonArea">
                 <button
                     type="button"
                     className="add-goodsList__more moreThemesButton"
-                    onClick={onShowMore}
+                    onClick={onToggleShow}
                 >
-                    <span>Mostrar más</span>
+                    <span>{showAll ? 'Mostrar menos' : 'Mostrar más'}</span>
                     <span style={{ marginLeft: '7px', fontSize: '18px' }}>
-                        <i className="bi bi-chevron-down"></i>
+                        <i className={`bi bi-chevron-${showAll ? 'up' : 'down'}`}></i>
                     </span>
                 </button>
             </div>
@@ -35,22 +35,42 @@ const GoodsListFooter = ({ onShowMore }) => {
 };
 
 const ProductCardComponent = () => {
-    const [productos, setProductos] = useState([]);
+    const [productos, setProductos] = useState([]); // Todos los productos
+    const [visibleProducts, setVisibleProducts] = useState([]); // Productos visibles
     const [loading, setLoading] = useState(true);
-    const { addToCart } = useCart(); // Hook para manejar el carrito
+    const [showAll, setShowAll] = useState(false); // Estado para alternar entre mostrar más o menos
+    const { addToCart } = useCart();
+
+    const PRODUCTS_INITIAL = 20;
+    const PRODUCTS_INCREMENT = 10;
 
     useEffect(() => {
         fetch('http://localhost:8000/api/productos/') // URL de la API
             .then((response) => response.json())
             .then((data) => {
                 setProductos(data);
+                setVisibleProducts(data.slice(0, PRODUCTS_INITIAL)); // Mostrar los primeros 30 productos
                 setLoading(false);
             })
             .catch((error) => console.error('Error al cargar los productos:', error));
     }, []);
 
-    const handleShowMore = () => {
-        console.log('Mostrar más items');
+    const handleToggleShow = () => {
+        if (showAll) {
+            const currentVisibleCount = visibleProducts.length;
+            const newVisibleCount = Math.max(currentVisibleCount - PRODUCTS_INCREMENT, PRODUCTS_INITIAL);
+            setVisibleProducts(productos.slice(0, newVisibleCount)); // Reducir los productos visibles
+            if (newVisibleCount === PRODUCTS_INITIAL) {
+                setShowAll(false);
+            }
+        } else {
+            const currentVisibleCount = visibleProducts.length;
+            const newVisibleCount = Math.min(currentVisibleCount + PRODUCTS_INCREMENT, productos.length);
+            setVisibleProducts(productos.slice(0, newVisibleCount)); // Aumentar los productos visibles
+            if (newVisibleCount === productos.length) {
+                setShowAll(true);
+            }
+        }
     };
 
     if (loading) {
@@ -60,7 +80,7 @@ const ProductCardComponent = () => {
     return (
         <div className="product-card-section">
             <ul className="product-card-grid">
-                {productos.map((producto) => (
+                {visibleProducts.map((producto) => (
                     <li key={producto.id} className="product-card">
                         <div className="imagen-container">
                             <img
@@ -83,7 +103,7 @@ const ProductCardComponent = () => {
                             </Link>
                             <button
                                 className="add-cartButton js-cartBtn js-list-cartBtn"
-                                onClick={() => addToCart(producto)} // Agregar al carrito
+                                onClick={() => addToCart(producto)}
                             >
                                 <i className="bi bi-cart"></i>
                             </button>
@@ -112,7 +132,7 @@ const ProductCardComponent = () => {
                     </li>
                 ))}
             </ul>
-            <GoodsListFooter onShowMore={handleShowMore} />
+            <GoodsListFooter onToggleShow={handleToggleShow} showAll={showAll} />
         </div>
     );
 };
