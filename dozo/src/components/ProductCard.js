@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/ProductCard.css';
+import { Link } from 'react-router-dom';
 import img1 from '../assets/img cards/camisa-rallas.png';
 import img2 from '../assets/img cards/camiseta1.png';
 import img3 from '../assets/img cards/short-estampado.png';
@@ -14,7 +15,7 @@ const GoodsListFooter = ({ onShowMore }) => {
                     className="add-goodsList__more moreThemesButton" 
                     onClick={onShowMore}>
                     <span>Mostrar más</span>
-                    <span style={{ marginLeft: '7px', fontSize: '18px' }}><i class="bi bi-chevron-down"></i></span>
+                    <span style={{ marginLeft: '7px', fontSize: '18px' }}><i className="bi bi-chevron-down"></i></span>
                 </button>
             </div>
 
@@ -28,7 +29,7 @@ const GoodsListFooter = ({ onShowMore }) => {
                     <p>
                         Puedes filtrar desde el botón de arriba.
                     </p>
-                    <p>Por precio ypor categoría</p>
+                    <p>Por precio y por categoría</p>
                 </div>
             </div>
         </div>
@@ -85,34 +86,30 @@ const ProductCardComponent = () => {
                                 <div className="tag">{item.tag}</div>
                             </div>
                             <span className="product-card-price">{item.price}</span>
+                        </div>
+                        <div className="product-card-description">{item.description}</div>
+                        <div className='add-goodsItem__buttonContainer'>
+                            <Link to="/detalles">
+                            <button className="product-card-button">Más detalles</button>
+                            </Link>
+                            <button 
+                                className="add-cartButton js-cartBtn js-list-cartBtn" 
+                                data-vid="39879430996029" 
+                            ></button>
                             <button 
                                 type="button" 
                                 className="add-likeButton js-likeBtn theme-liked-1192" 
                                 data-tid="1192" 
                                 data-liked="0"
                             >
-                                <svg 
-                                    xmlns="http://www.w3.org/2000/svg" 
-                                    width="19.11" 
-                                    height="17.324" 
-                                    viewBox="0 0 19.11 17.324"
-                                >
-                                    <path 
-                                        d="M17.765,7.631a4.734,4.734,0,0,0-4.036-3.366,5.345,5.345,0,0,0-4.7,2.117A5.291,5.291,0,0,0,4.8,4.24,4.757,4.757,0,0,0,.387,7.346a5.487,5.487,0,0,0,1.2,5.7L8.628,20.4a.552.552,0,0,0,.794,0l7.044-7.345A5.45,5.45,0,0,0,17.765,7.631Z" 
-                                        transform="translate(0.536 -3.74)" 
-                                        fill="none" 
-                                        stroke="#191615" 
-                                        strokeWidth="1"
-                                    />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="19.11" height="17.324" viewBox="0 0 19.11 17.324">
+                                    <path d="M17.765,7.631a4.734,4.734,0,0,0-4.036-3.366,5.345,5.345,0,0,0-4.7,2.117A5.291,5.291,0,0,0,4.8,4.24,4.757,4.757,0,0,0,.387,7.346a5.487,5.487,0,0,0,1.2,5.7L8.628,20.4a.552.552,0,0,0,.794,0l7.044-7.345A5.45,5.45,0,0,0,17.765,7.631Z" transform="translate(0.536 -3.74)" fill="none" stroke="#191615" strokeWidth="1"/>
                                 </svg>
                             </button>
                         </div>
-                        <div className="product-card-description">{item.description}</div>
-                        <button className="product-card-button">Más detalles</button>
                     </li>
                 ))}
             </ul>
-
             <GoodsListFooter onShowMore={handleShowMore} />
         </div>
     );

@@ -12,6 +12,8 @@ import img9 from '../assets/img-pick/pantalon-fenix.png';
 import img10 from '../assets/img-pick/short-medio.png';
 import img11 from '../assets/img-pick/short2.png';
 import img12 from '../assets/img-pick/sueter-estrella.png';
+import { Link } from 'react-router-dom';
+
 
 import PickupIcon from '../assets/pickupicon';
 
@@ -150,7 +152,9 @@ const PickUpSectionComponent = () => {
                         <div className="pickup-item-tag">{item.tag}</div>
                         <div className="pickup-item-price">{item.price}</div>
                         <div className="pickup-item-description">{item.description}</div>
+                        <Link to="/detalles">
                         <button className="pickup-button">Más detalles</button>
+                        </Link>
                     </li>
                 ))}
             </ul>
