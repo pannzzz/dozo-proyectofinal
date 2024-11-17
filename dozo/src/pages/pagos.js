@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; // Importar para recibir el estado de navegación
+import axios from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom'; // Importar useNavigate
 import '../styles/pagos.css';
 
 const Pagos = () => {
     const { state } = useLocation(); // Obtener estado pasado desde la navegación
+    const navigate = useNavigate(); // Instancia de useNavigate
     const cart = state?.cart || []; // Obtener el carrito o un array vacío si no existe
 
-    // Estado inicial del formulario, se autocompleta con la información del usuario si está disponible
     const [formData, setFormData] = useState({
         email: '',
         telefono: '',
@@ -19,9 +20,8 @@ const Pagos = () => {
 
     const [errors, setErrors] = useState({});
 
-    // Autocompletar datos del usuario al cargar el componente
     useEffect(() => {
-        const userData = JSON.parse(localStorage.getItem('user')); // Supongamos que el usuario está almacenado en localStorage
+        const userData = JSON.parse(localStorage.getItem('user')); // Cargar datos del usuario desde localStorage
         if (userData) {
             setFormData({
                 email: userData.email || '',
@@ -46,32 +46,21 @@ const Pagos = () => {
     const validateForm = () => {
         const newErrors = {};
 
-        // Validación de correo electrónico
         if (!formData.email) {
             newErrors.email = 'El correo electrónico es obligatorio.';
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
             newErrors.email = 'El formato del correo electrónico es inválido.';
         }
 
-        // Validación de teléfono
         if (!formData.telefono) {
             newErrors.telefono = 'El número de teléfono es obligatorio.';
         } else if (!/^\d{10,15}$/.test(formData.telefono)) {
             newErrors.telefono = 'El número de teléfono debe tener entre 10 y 15 dígitos.';
         }
 
-        // Validación de apellido y nombre
         if (!formData.apellido) newErrors.apellido = 'El apellido es obligatorio.';
         if (!formData.nombre) newErrors.nombre = 'El nombre es obligatorio.';
-
-        // Validación de código postal
-        if (!formData.codigoPostal) {
-            newErrors.codigoPostal = 'El código postal es obligatorio.';
-        } else if (!/^\d{3}-?\d{4}$/.test(formData.codigoPostal)) {
-            newErrors.codigoPostal = 'El código postal debe ser en formato 123-4567.';
-        }
-
-        // Validación de ciudad y dirección
+        if (!formData.codigoPostal) newErrors.codigoPostal = 'El código postal es obligatorio.';
         if (!formData.ciudad) newErrors.ciudad = 'La ciudad es obligatoria.';
         if (!formData.direccion) newErrors.direccion = 'La dirección es obligatoria.';
 
@@ -79,13 +68,31 @@ const Pagos = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
-            console.log('Formulario enviado:', formData);
-            alert('Pedido confirmado correctamente');
-        } else {
+        if (!validateForm()) {
             alert('Por favor, corrija los errores antes de continuar.');
+            return;
+        }
+
+        const payload = {
+            user: formData,
+            cart,
+        };
+
+        try {
+            const response = await axios.post('http://localhost:8000/api/ventas/', payload, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+            console.log('Pedido enviado correctamente:', response.data);
+            alert('Pedido confirmado correctamente');
+            // Redirigir a la página de MisPedidos
+            navigate('/mispedidos');
+        } catch (error) {
+            console.error('Error al enviar el pedido:', error);
+            alert('Ocurrió un error al confirmar el pedido. Inténtelo de nuevo.');
         }
     };
 
@@ -94,13 +101,11 @@ const Pagos = () => {
     return (
         <div className="pagos-page">
             <div className="pagos-container">
-                {/* Pago contra entrega */}
                 <section className="pago-rapido">
                     <h3>Pago contra entrega</h3>
                     <p>Por favor, complete los datos de entrega para proceder con el pedido.</p>
                 </section>
 
-                {/* Contacto */}
                 <section className="contacto">
                     <h3>Contacto</h3>
                     <input
@@ -123,7 +128,6 @@ const Pagos = () => {
                     {errors.telefono && <span className="error">{errors.telefono}</span>}
                 </section>
 
-                {/* Dirección de entrega */}
                 <section className="direccion-facturacion">
                     <h3>Dirección de entrega</h3>
                     <form className="form-direccion" onSubmit={handleSubmit}>
@@ -190,7 +194,6 @@ const Pagos = () => {
                 </section>
             </div>
 
-            {/* Resumen del pedido */}
             <aside className="resumen-pedido">
                 {cart.map((producto) => (
                     <div key={producto.id} className="producto-resumen">

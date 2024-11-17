@@ -107,27 +107,6 @@ const ProductCardComponent = () => {
                             >
                                 <i className="bi bi-cart"></i>
                             </button>
-                            <button
-                                type="button"
-                                className="add-likeButton js-likeBtn theme-liked-1192"
-                                data-tid={producto.id}
-                                data-liked="0"
-                            >
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="19.11"
-                                    height="17.324"
-                                    viewBox="0 0 19.11 17.324"
-                                >
-                                    <path
-                                        d="M17.765,7.631a4.734,4.734,0,0,0-4.036-3.366,5.345,5.345,0,0,0-4.7,2.117A5.291,5.291,0,0,0,4.8,4.24,4.757,4.757,0,0,0,.387,7.346a5.487,5.487,0,0,0,1.2,5.7L8.628,20.4a.552.552,0,0,0,.794,0l7.044-7.345A5.45,5.45,0,0,0,17.765,7.631Z"
-                                        transform="translate(0.536 -3.74)"
-                                        fill="none"
-                                        stroke="#191615"
-                                        strokeWidth="1"
-                                    />
-                                </svg>
-                            </button>
                         </div>
                     </li>
                 ))}

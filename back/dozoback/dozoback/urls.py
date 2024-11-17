@@ -51,11 +51,12 @@ urlpatterns = [
     path('ventas/', views.mostrar_venta, name='mostrar_venta'),
     path('ventas/editar/<int:venta_id>/', views.editar_venta, name='editar_venta'),
     path('ventas/eliminar/<int:venta_id>/', views.eliminar_venta, name='eliminar_venta'),
+    path('api/ventas/', views.crear_venta_api, name='crear_venta_api'),
     
     #api
     path('api/productos/', ProductoListAPIView.as_view(), name='producto-list'),  # Nota el uso de .as_view()
     path('api/productos/<int:pk>/', ProductoDetailAPIView.as_view(), name='producto-detail'),
-    
+    path('api/pedidos/', views.listar_pedidos_usuario, name='listar_pedidos_usuario'),
     
 ]
 if settings.DEBUG:  # Solo para desarrollo

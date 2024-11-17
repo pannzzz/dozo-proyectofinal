@@ -5,25 +5,12 @@ import { useCart } from './CartContext'; // Contexto del carrito
 import '../styles/carrito.css';
 
 const Carrito = () => {
-    const { cart, removeFromCart, updateProductQuantity, setCart } = useCart(); // Acceso al contexto
+    const { cart, removeFromCart, updateProductQuantity } = useCart(); // Acceso al contexto
     const navigate = useNavigate();
     const [aceptarTerminos, setAceptarTerminos] = useState(false); // Estado para el checkbox
     const [subtotal, setSubtotal] = useState(0); // Estado para el subtotal
 
-    // Cargar carrito desde localStorage al iniciar
-    useEffect(() => {
-        const storedCart = localStorage.getItem('cart');
-        if (storedCart) {
-            setCart(JSON.parse(storedCart));
-        }
-    }, [setCart]);
-
-    // Guardar carrito en localStorage cada vez que cambie
-    useEffect(() => {
-        localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
-
-    // Actualizar el subtotal dinámicamente cuando cambien los productos
+    // Calcular el subtotal cuando cambie el carrito
     useEffect(() => {
         const total = cart.reduce(
             (acc, producto) => acc + producto.precio * producto.cantidad,

@@ -16,7 +16,7 @@ const SideMenu = ({ closeMenu }) => {
 
     const handleLogout = () => {
         // Eliminar datos del usuario de localStorage
-        localStorage.removeItem('user');
+        localStorage.clear();
         setUser(null); // Actualizar estado del usuario
         closeMenu(); // Cerrar el menú lateral
         window.location.reload(); // Opcional, para recargar la página
@@ -66,18 +66,9 @@ const SideMenu = ({ closeMenu }) => {
 
                                 {user && ( // Solo mostrar si el usuario ha iniciado sesión
                                     <>
-                                        <li className="unu3">
-                                            <a href="/favoritos" className="add-globalMenu__list01__link">
-                                                <img
-                                                    src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-brush.svg"
-                                                    alt="Ícono de favoritos" className="imagen-regalo"
-                                                />
-                                                <span>Tus favoritos</span><i className="bi bi-chevron-right arrow"></i>
-                                            </a>
-                                        </li>
 
                                         <li className="unu3">
-                                            <a href="/pedidos" className="add-globalMenu__list01__link">
+                                            <a href="/mispedidos" className="add-globalMenu__list01__link">
                                                 <img
                                                     src="https://auth.dozo-gift.com/front/v1_1/images/common/icon-present.png"
                                                     alt="Ícono de pedidos" className="imagen-regalo"

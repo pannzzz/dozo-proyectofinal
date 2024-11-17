@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect # type: ignore
 from django.contrib.auth import login, authenticate, logout as auth_logout # type: ignore
 from django.contrib.auth.forms import AuthenticationForm # type: ignore
 from django.db import IntegrityError # type: ignore
-from .models import CustomUser, Producto, Categoria, Carrito, Venta
+from .models import CustomUser, Producto, Categoria, Carrito, Venta, VentaProducto, Producto, Estado
 from .forms import CustomUserCreationForm, CustomUserChangeForm, ProductoForm, CategoriaForm, CarritoForm, VentaForm
 import json
 from django.http import JsonResponse
@@ -312,28 +312,60 @@ def mostrar_venta(request):
     })
 
 # Crear una venta
-def crear_venta(request):
+@csrf_exempt
+def crear_venta_api(request):
     if request.method == 'POST':
-        form = VentaForm(request.POST)
-        if form.is_valid():
+        try:
+            # Parsear el cuerpo de la solicitud como JSON
+            data = json.loads(request.body)
+            print("Datos recibidos:", data)  # Para depuración
+
+            # Validar la estructura del payload
+            if not data.get('user') or not data.get('cart'):
+                return JsonResponse({'error': 'El payload debe contener "user" y "cart".'}, status=400)
+
+            user_data = data['user']
+            cart = data['cart']
+
+            # Validar y obtener el usuario
             try:
-                form.save()
-                return redirect('mostrar_venta')
-            except Exception as e:
-                return render(request, 'ventas/venta_create.html', {
-                    'form': form,
-                    'error': f"Error al crear la venta: {str(e)}"
-                })
-        else:
-            return render(request, 'ventas/venta_create.html', {
-                'form': form,
-                'error': "Hay errores en la información ingresada. Por favor, revisa los campos."
-            })
-    else:
-        form = VentaForm()
-        return render(request, 'ventas/venta_create.html', {
-            'form': form
-        })
+                usuario = CustomUser.objects.get(email=user_data.get('email'))
+            except CustomUser.DoesNotExist:
+                return JsonResponse({'error': 'Usuario no encontrado.'}, status=404)
+
+            # Crear la venta
+            estado, created = Estado.objects.get_or_create(nombre="Pendiente")
+            total = sum(float(item['precio']) * item['cantidad'] for item in cart)  # Convertir a float
+            venta = Venta.objects.create(
+                usuario=usuario,
+                total=total,
+                estado=estado
+            )
+
+            # Asociar productos con la venta
+            for item in cart:
+                try:
+                    producto = Producto.objects.get(id=item['id'])
+                    VentaProducto.objects.create(
+                        venta=venta,
+                        producto=producto,
+                        precio_unidad=float(producto.precio),  # Convertir precio a float
+                        cantidad=item['cantidad']
+                    )
+                except Producto.DoesNotExist:
+                    return JsonResponse({'error': f'Producto con ID {item["id"]} no encontrado.'}, status=404)
+
+            return JsonResponse({'message': 'Venta creada exitosamente.', 'venta_id': venta.id}, status=201)
+
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Error al parsear JSON.'}, status=400)
+        except Exception as e:
+            print("Error interno:", str(e))  # Para depuración en consola
+            return JsonResponse({'error': f'Error interno: {str(e)}'}, status=500)
+
+    # Retornar error si el método no es POST
+    return JsonResponse({'error': 'Método no permitido.'}, status=405)
+
 
 # Editar una venta
 def editar_venta(request, venta_id):
@@ -437,3 +469,38 @@ class CartView(APIView):
         item.delete()
         serializer = CartSerializer(cart)
         return Response(serializer.data)
+
+
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+from .models import Venta, VentaProducto
+from django.core.serializers import serialize
+
+@login_required
+def listar_pedidos_usuario(request):
+    try:
+        usuario = request.user  # Obtener el usuario autenticado
+        ventas = Venta.objects.filter(usuario=usuario).select_related('estado')
+
+        pedidos = [
+            {
+                "id": venta.id,
+                "fecha_venta": venta.fecha_venta.strftime('%Y-%m-%d %H:%M:%S'),
+                "estado": venta.estado.nombre,
+                "total": float(venta.total),
+                "productos": [
+                    {
+                        "titulo": vp.producto.titulo,
+                        "cantidad": vp.cantidad,
+                        "precio": float(vp.precio_unidad),
+                    }
+                    for vp in venta.productos.all()
+                ]
+            }
+            for venta in ventas
+        ]
+
+        return JsonResponse({"pedidos": pedidos}, status=200)
+    except Exception as e:
+        return JsonResponse({"error": f"Error al obtener pedidos: {str(e)}"}, status=500)

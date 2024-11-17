@@ -12,6 +12,7 @@ import Carrito from './components/carritocomponent';
 import MoreDetails from './components/MoreDetails';
 import Pagos from './pages/pagos';
 import { CartProvider } from './components/CartContext'; // Importa el contexto del carrito
+import MisPedidos from './components/MisPedidos';
 import './App.css';
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
             <Route path="/carrito" element={<Carrito />} /> {/* Nueva ruta para el carrito */}
             <Route path="/pagos" element={<Pagos />} /> {/* Nueva ruta para los pagos */}
             <Route path="/detalles/:id" element={<MoreDetails />} />
+            <Route path="/mispedidos" element={<MisPedidos />} />
           </Routes>
         </div>
       </Router>

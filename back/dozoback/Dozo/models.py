@@ -61,7 +61,8 @@ class Producto(models.Model):
     
 
 class Estado(models.Model):
-    nombre = models.CharField(max_length=50)  # Ej: "En proceso", "Enviado", etc.
+    nombre = models.CharField(max_length=100)
+
 
     def __str__(self):
         return self.nombre
