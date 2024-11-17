@@ -1,62 +1,62 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Importar para la navegación
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
+import { useCart } from './CartContext'; // Contexto del carrito
 import '../styles/carrito.css';
 
 const Carrito = () => {
-    const [productos, setProductos] = useState([
-        {
-            id: 1,
-            nombre: '#77 EXPLOSIÓN AZUL',
-            precio: 3300,
-            cantidad: 1,
-            imagen: 'https://dozo-gift.com/cdn/shop/files/th_470x470_phpyLuFHR_x190.jpg?v=1729129144',
-        },
-    ]);
-
+    const { cart, removeFromCart, updateProductQuantity, setCart } = useCart(); // Acceso al contexto
+    const navigate = useNavigate();
     const [aceptarTerminos, setAceptarTerminos] = useState(false); // Estado para el checkbox
-    const navigate = useNavigate(); // Hook de navegación
+    const [subtotal, setSubtotal] = useState(0); // Estado para el subtotal
 
-    const incrementarCantidad = (id) => {
-        setProductos((prevProductos) =>
-            prevProductos.map((producto) =>
-                producto.id === id
-                    ? { ...producto, cantidad: producto.cantidad + 1 }
-                    : producto
-            )
+    // Cargar carrito desde localStorage al iniciar
+    useEffect(() => {
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+            setCart(JSON.parse(storedCart));
+        }
+    }, [setCart]);
+
+    // Guardar carrito en localStorage cada vez que cambie
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
+
+    // Actualizar el subtotal dinámicamente cuando cambien los productos
+    useEffect(() => {
+        const total = cart.reduce(
+            (acc, producto) => acc + producto.precio * producto.cantidad,
+            0
         );
-    };
+        setSubtotal(total);
+    }, [cart]);
 
-    const disminuirCantidad = (id) => {
-        setProductos((prevProductos) =>
-            prevProductos.map((producto) =>
-                producto.id === id && producto.cantidad > 1
-                    ? { ...producto, cantidad: producto.cantidad - 1 }
-                    : producto
-            )
-        );
-    };
-
-    const eliminarProducto = (id) => {
-        setProductos((prevProductos) =>
-            prevProductos.filter((producto) => producto.id !== id)
-        );
-    };
-
-    const subtotal = productos.reduce(
-        (acc, producto) => acc + producto.precio * producto.cantidad,
-        0
-    );
-
+    // Manejar cambio del checkbox
     const handleCheckboxChange = (e) => {
-        setAceptarTerminos(e.target.checked); // Cambiar el estado al marcar/desmarcar el checkbox
+        setAceptarTerminos(e.target.checked);
     };
 
+    // Proceder al pago
     const handleProcederPago = () => {
         if (aceptarTerminos) {
-            navigate('/pagos'); // Redirigir a la ruta /pagos
+            navigate('/pagos', { state: { cart } }); // Pasar carrito como estado
+        } else {
+            alert('Debe aceptar los términos para continuar.');
         }
     };
+
+    // Si no hay productos en el carrito
+    if (cart.length === 0) {
+        return (
+            <>
+                <Navbar initialScrolled={true} />
+                <div className="carrito-page">
+                    <h2>No hay productos en tu carrito</h2>
+                </div>
+            </>
+        );
+    }
 
     return (
         <>
@@ -67,53 +67,67 @@ const Carrito = () => {
                         <h2 className="add-sectionTitle">
                             <span className="add-sectionTitle__text-03">
                                 Productos en el carrito (
-                                <span className="total_cnt">{productos.length}</span>{' '}
-                                artículo{productos.length > 1 ? 's' : ''})
+                                <span className="total_cnt">{cart.length}</span> artículo
+                                {cart.length > 1 ? 's' : ''})
                             </span>
                         </h2>
                     </div>
                 </section>
 
                 <div className="carrito-productos">
-                    {productos.map((producto) => (
+                    {cart.map((producto) => (
                         <div key={producto.id} className="carrito-producto">
                             <img
-                                src={producto.imagen}
-                                alt={producto.nombre}
+                                src={
+                                    producto.imagen.startsWith('http')
+                                        ? producto.imagen
+                                        : `http://localhost:8000/${producto.imagen}`
+                                }
+                                alt={producto.titulo}
                                 className="producto-imagen"
                             />
                             <div className="producto-detalle">
                                 <div className="nombre">
-                                    <h3>{producto.nombre}</h3>
+                                    <h3>{producto.titulo}</h3>
                                     <button
-                                        onClick={() => eliminarProducto(producto.id)}
+                                        onClick={() => removeFromCart(producto.id)}
                                         className="producto-eliminar"
-                                    ></button>
+                                    >
+                                        Eliminar
+                                    </button>
                                 </div>
-                                <p>{producto.precio.toLocaleString('es-JP')} pesos</p>
+                                <p>{producto.precio.toLocaleString('es-CO')} COP</p>
                             </div>
                             <div className="producto-cantidad">
                                 <button
-                                    onClick={() => disminuirCantidad(producto.id)}
+                                    onClick={() =>
+                                        producto.cantidad > 1 &&
+                                        updateProductQuantity(producto.id, producto.cantidad - 1)
+                                    }
                                     className="menos"
-                                ></button>
+                                >
+                                    -
+                                </button>
                                 <span>{producto.cantidad}</span>
                                 <button
-                                    onClick={() => incrementarCantidad(producto.id)}
+                                    onClick={() =>
+                                        updateProductQuantity(producto.id, producto.cantidad + 1)
+                                    }
                                     className="mas"
-                                ></button>
+                                >
+                                    +
+                                </button>
                             </div>
                         </div>
                     ))}
                 </div>
 
                 <div className="carrito-subtotal">
-                    <p>subtotal</p>
-                    <h2>$ {subtotal.toLocaleString('es-JP')}</h2>
-                    <p>* Impuesto al consumo y envío del artículo incluidos</p>
+                    <p>Subtotal</p>
+                    <h2>$ {subtotal.toLocaleString('es-CO')}</h2>
+                    <p>* Impuesto al consumo y envío incluidos</p>
                 </div>
 
-                {/* Términos y condiciones */}
                 <div className="carrito-terminos">
                     <h3 className="terminos-titulo">
                         Términos de uso y manejo de la información personal
@@ -123,16 +137,8 @@ const Carrito = () => {
                             <strong>Condiciones de uso</strong>
                         </p>
                         <p>
-                            Estos Términos de uso se aplican al uso del sitio web de "dōzo -
-                            Have fun with Gift." (en adelante, el "Sitio") operado por Daiwa
-                            Co., Ltd. (en adelante, la "Compañía"). Después de aceptar el
-                            contenido, registre su información y solicite productos.
-                        </p>
-                        <p>1. Registrador</p>
-                        <p>
-                            El registro de la información del cliente y de los pedidos de
-                            productos y servicios debe ser realizado por el propio
-                            solicitante. El registro por poder no está permitido.
+                            Al utilizar este sitio, acepta los términos de uso y manejo de su
+                            información personal.
                         </p>
                     </div>
                     <div className="terminos-checkbox">

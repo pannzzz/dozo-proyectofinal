@@ -19,8 +19,8 @@ from django.urls import path # type: ignore
 from Dozo import views
 from django.conf import settings # type: ignore
 from django.conf.urls.static import static # type: ignore
-from Dozo.views import ProductoListAPIView
-
+from Dozo.views import ProductoListAPIView, ProductoDetailAPIView
+from Dozo.views import CartView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,7 +46,7 @@ urlpatterns = [
 
     # Carrito URLs
     path('carritos/nuevo/', views.crear_carrito, name='crear_carrito'),
-
+    path('cart/', CartView.as_view(), name='cart'),
     # Venta URLs
     path('ventas/', views.mostrar_venta, name='mostrar_venta'),
     path('ventas/editar/<int:venta_id>/', views.editar_venta, name='editar_venta'),
@@ -54,6 +54,9 @@ urlpatterns = [
     
     #api
     path('api/productos/', ProductoListAPIView.as_view(), name='producto-list'),  # Nota el uso de .as_view()
+    path('api/productos/<int:pk>/', ProductoDetailAPIView.as_view(), name='producto-detail'),
+    
+    
 ]
 if settings.DEBUG:  # Solo para desarrollo
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

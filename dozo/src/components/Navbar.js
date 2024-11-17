@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from './CartContext';
 import SideMenu from './SideMenu';
 import Text from './Text';
 import MovingBanner from './MovingBanner';
@@ -11,6 +12,7 @@ const Navbar = ({ initialScrolled = false }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(initialScrolled);
     const [user, setUser] = useState(null); // Estado para manejar el usuario
+    const { cart } = useCart(); // Usar el contexto del carrito
 
     useEffect(() => {
         // Obtener usuario desde localStorage
@@ -73,7 +75,6 @@ const Navbar = ({ initialScrolled = false }) => {
                         <span>Encuentra tu estilo</span>
                     </Link>
 
-                    {/* Mostrar nombre del usuario o botón de inicio de sesión */}
                     {user ? (
                         <span className="login-link">Hola, {user.username}</span>
                     ) : (
@@ -82,7 +83,7 @@ const Navbar = ({ initialScrolled = false }) => {
 
                     <Link to="/carrito" className="cart">
                         <img src={cartIcon} alt="Carrito de compras" className="cart-icon" />
-                        <span className="cart-count">0</span>
+                        <span className="cart-count">{cart.length}</span>
                     </Link>
 
                     <button className="menu-icon" onClick={toggleMenu}>
@@ -92,7 +93,7 @@ const Navbar = ({ initialScrolled = false }) => {
             </div>
 
             {menuOpen && <SideMenu closeMenu={toggleMenu} />}
-            </div>
+        </div>
     );
 };
 

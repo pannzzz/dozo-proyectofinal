@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import '../styles/MoreDetails.css';
 import Navbar from '../components/Navbar';
 import FooterComponent from '../components/FooterComponent';
 
 const MoreDetails = () => {
+    const { id } = useParams(); // Obtener el ID del producto desde la URL
+    const [producto, setProducto] = useState(null);
     const [selectedSize, setSelectedSize] = useState(null);
     const [quantity, setQuantity] = useState(1);
+
+    useEffect(() => {
+        // Llamar a la API para obtener los datos del producto
+        fetch(`http://localhost:8000/api/productos/${id}/`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data); // Verifica el objeto del producto
+                setProducto(data);
+            })
+            .catch((error) => console.error('Error al cargar el producto:', error));
+    }, [id]);
 
     const handleSizeSelect = (size) => {
         setSelectedSize(size);
@@ -17,31 +31,40 @@ const MoreDetails = () => {
         }
     };
 
+    if (!producto) {
+        return <p>Cargando detalles del producto...</p>;
+    }
+
+    // Construir la URL de la imagen usando la ruta completa desde el backend
+    const imageUrl = producto.imagen.startsWith('http')
+        ? producto.imagen
+        : `http://localhost:8000/media/${producto.imagen}`;
+
     return (
         <>
             <Navbar initialScrolled={true} />
-            {/* Breadcrumb debajo del Navbar */}
 
+            {/* Breadcrumb debajo del Navbar */}
             <div className="breadcrumb-container">
                 <a href="/" className="breadcrumb-more">Dozo</a> / 
-                <a href="/findgift" className="breadcrumb-more"> Search</a> / Mas detalles
+                <a href="/findgift" className="breadcrumb-more"> Search</a> / {producto.titulo}
             </div>
-            <div className="details-container">
 
+            <div className="details-container">
                 {/* Imagen del producto */}
                 <div className="details-image-section">
-
-                    <img
-                        src="https://via.placeholder.com/500x500" // Reemplaza con la URL real de la imagen
-                        alt="Detalle del producto"
-                        className="details-image"
+                    <img 
+                        src={imageUrl} 
+                        alt={producto.titulo} 
+                        className="product-imagen" 
+                        onError={(e) => e.target.src = 'https://via.placeholder.com/500x500'} // Imagen por defecto si falla
                     />
                 </div>
 
                 {/* Información del producto */}
                 <div className="details-info-section">
-                    <h1 className="details-title">#14 Comité de Mejora de la Calidad de Vida</h1>
-                    <p className="details-price">¥14,080 <span className="details-tax-info">Impuesto al consumo y envío incluidos</span></p>
+                    <h1 className="details-title">{producto.titulo}</h1>
+                    <p className="details-price">${producto.precio} COP<span className="details-tax-info">Impuesto al consumo y envío incluidos</span></p>
 
                     {/* Selección de talla */}
                     <div className="details-size-section">
@@ -92,20 +115,13 @@ const MoreDetails = () => {
                     {/* Separador */}
                     <hr className="details-divider" />
 
-                    {/* Título de sección */}
-                    <h2 className="details-subtitle">Regalos que puedes elegir en este dōzo</h2>
-
-                    {/* Descripción de producto */}
+                    {/* Descripción del producto */}
                     <div className="details-description">
-                        <p><b>ROSENTHAL Softspot Solar Circular S (Gris Pizarra)</b></p>
-                        <ul>
-                            <li>Tamaño / diámetro 12 × altura 18,5cm</li>
-                            <li>Material: Plástico reciclado + China</li>
-                            <li>Diseñado para uso en interiores y exteriores.</li>
-                        </ul>
+                        <p>{producto.descripcion}</p>
                     </div>
                 </div>
             </div>
+
             <FooterComponent />
         </>
     );

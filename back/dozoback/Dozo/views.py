@@ -393,3 +393,47 @@ class ProductoListAPIView(APIView):
         return Response(serializer.data)
     
     
+    
+from rest_framework.generics import RetrieveAPIView
+from .models import Producto
+from .serializers import ProductoSerializer
+
+class ProductoDetailAPIView(RetrieveAPIView):
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer
+    
+
+
+# views.py
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .models import Cart, Producto
+from .serializers import CartSerializer, CartItemSerializer
+
+class CartView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+    def post(self, request):
+        cart, created = Cart.objects.get_or_create(user=request.user)
+        product = Producto.objects.get(id=request.data['product_id'])
+        item, item_created = cart.items.get_or_create(product=product)
+        if not item_created:
+            item.quantity += request.data.get('quantity', 1)
+        else:
+            item.quantity = request.data.get('quantity', 1)
+        item.save()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)
+
+    def delete(self, request, item_id):
+        cart = Cart.objects.get(user=request.user)
+        item = cart.items.get(id=item_id)
+        item.delete()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)

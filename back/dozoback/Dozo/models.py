@@ -91,3 +91,15 @@ class Carrito(models.Model):
 
     def __str__(self):
         return f"Carrito de {self.usuario} - {self.producto.titulo} x {self.cantidad}"
+    
+class Cart(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name="cart")
+    products = models.ManyToManyField('Producto', through='CartItem')
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey('Producto', on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def total_price(self):
+        return self.quantity * self.product.precio

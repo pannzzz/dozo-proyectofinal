@@ -1,19 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; // Importar para recibir el estado de navegación
 import '../styles/pagos.css';
 
 const Pagos = () => {
+    const { state } = useLocation(); // Obtener estado pasado desde la navegación
+    const cart = state?.cart || []; // Obtener el carrito o un array vacío si no existe
+
+    // Estado inicial del formulario, se autocompleta con la información del usuario si está disponible
     const [formData, setFormData] = useState({
         email: '',
         telefono: '',
         apellido: '',
         nombre: '',
         codigoPostal: '',
-        prefectura: '',
         ciudad: '',
         direccion: '',
     });
 
     const [errors, setErrors] = useState({});
+
+    // Autocompletar datos del usuario al cargar el componente
+    useEffect(() => {
+        const userData = JSON.parse(localStorage.getItem('user')); // Supongamos que el usuario está almacenado en localStorage
+        if (userData) {
+            setFormData({
+                email: userData.email || '',
+                telefono: userData.telefono || '',
+                apellido: userData.apellido || '',
+                nombre: userData.nombre || '',
+                codigoPostal: userData.codigoPostal || '',
+                ciudad: userData.ciudad || '',
+                direccion: userData.direccion || '',
+            });
+        }
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -51,8 +71,7 @@ const Pagos = () => {
             newErrors.codigoPostal = 'El código postal debe ser en formato 123-4567.';
         }
 
-        // Validación de prefectura, ciudad y dirección
-        if (!formData.prefectura) newErrors.prefectura = 'La prefectura es obligatoria.';
+        // Validación de ciudad y dirección
         if (!formData.ciudad) newErrors.ciudad = 'La ciudad es obligatoria.';
         if (!formData.direccion) newErrors.direccion = 'La dirección es obligatoria.';
 
@@ -69,6 +88,8 @@ const Pagos = () => {
             alert('Por favor, corrija los errores antes de continuar.');
         }
     };
+
+    const total = cart.reduce((acc, producto) => acc + producto.precio * producto.cantidad, 0);
 
     return (
         <div className="pagos-page">
@@ -108,7 +129,7 @@ const Pagos = () => {
                     <form className="form-direccion" onSubmit={handleSubmit}>
                         <div className="fila">
                             <select className="select-pais">
-                                <option value="japon">Colombia</option>
+                                <option value="colombia">Colombia</option>
                             </select>
                         </div>
                         <div className="fila">
@@ -141,15 +162,6 @@ const Pagos = () => {
                                 onChange={handleChange}
                             />
                             {errors.codigoPostal && <span className="error">{errors.codigoPostal}</span>}
-                            <input
-                                type="text"
-                                name="prefectura"
-                                placeholder="Prefectura"
-                                className="input-prefectura"
-                                value={formData.prefectura}
-                                onChange={handleChange}
-                            />
-                            {errors.prefectura && <span className="error">{errors.prefectura}</span>}
                         </div>
                         <div className="fila">
                             <input
@@ -180,26 +192,26 @@ const Pagos = () => {
 
             {/* Resumen del pedido */}
             <aside className="resumen-pedido">
-                <div className="producto-resumen">
-                    <img
-                        src="https://dozo-gift.com/cdn/shop/files/th_470x470_phpyLuFHR_x190.jpg?v=1729129144"
-                        alt="#77 EXPLOSIÓN AZUL"
-                        className="imagen-producto"
-                    />
-                    <div className="detalles-producto">
-                        <p>#77 EXPLOSIÓN AZUL</p>
-                        <p>¥ 3,300</p>
+                {cart.map((producto) => (
+                    <div key={producto.id} className="producto-resumen">
+                        <img
+                            src={
+                                producto.imagen.startsWith('http')
+                                    ? producto.imagen
+                                    : `http://localhost:8000/${producto.imagen}`
+                            }
+                            alt={producto.titulo}
+                            className="imagen-producto"
+                        />
+                        <div className="detalles-producto">
+                            <p>{producto.titulo}</p>
+                            <p>{producto.precio.toLocaleString('es-CO')} COP</p>
+                        </div>
                     </div>
-                </div>
-
-                <div className="codigo-descuento">
-                    <input type="text" placeholder="Códigos de cupón" className="input-cupon" />
-                    <button className="boton-aplicar">aplicar</button>
-                </div>
-
+                ))}
                 <div className="suma-total">
-                    <p>suma</p>
-                    <h3>JPY ¥ 3,300</h3>
+                    <p>Total</p>
+                    <h3>$ {total.toLocaleString('es-CO')}</h3>
                 </div>
             </aside>
         </div>
