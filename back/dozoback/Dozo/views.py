@@ -524,3 +524,32 @@ class RegisterUserView(APIView):
 
 
 
+from django.http import JsonResponse
+from .models import Producto
+
+def filter_products(request):
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+    category_id = request.GET.get('category_id')
+
+    products = Producto.objects.all()
+
+    if min_price:
+        products = products.filter(precio__gte=min_price)
+    if max_price:
+        products = products.filter(precio__lte=max_price)
+    if category_id:
+        products = products.filter(categoria_id=category_id)
+
+    products_data = [
+        {
+            "id": p.id,
+            "titulo": p.titulo,
+            "precio": p.precio,
+            "categoria": {"id": p.categoria.id, "nombre": p.categoria.nombre} if p.categoria else None,
+            "descripcion": p.descripcion,
+            "imagen": p.imagen.url,
+        }
+        for p in products
+    ]
+    return JsonResponse(products_data, safe=False)

@@ -354,3 +354,24 @@
     width: 38px;
     height: 38px;
 }
+
+.selector_categoria {
+    padding-left: .75rem;
+    padding-right: .75rem;
+    padding-bottom: .5rem;
+    padding-top: .5rem;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+    /*ponle un borde negro*/
+    border: 1px solid #000;
+    /*ponle un borde redondeado*/
+    border-radius: 20px;
+    /*ponle un fondo gris claro*/
+    background-color: #a6a9ac;
+    /*ponlo al lado izquierdo*/
+    margin-right: 1rem;
+    /*ponle un margen superior de 10px*/
+    margin-top: 10px;
+}
+

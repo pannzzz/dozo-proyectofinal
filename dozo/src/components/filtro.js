@@ -1,11 +1,53 @@
 import React, { useState } from 'react';
 import '../styles/Filtro.css';
+import { useFilters } from './FilterContext'; // Importar el contexto de filtros
 
 const Filtro = ({ onClose }) => {
+    const { applyFilters } = useFilters(); // Obtener la función para aplicar filtros
     const [activePrice, setActivePrice] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
+
+    const priceRanges = [
+        { min: 30000, max: 50000, label: 'De $30,000 a $50,000' },
+        { min: 50001, max: 100000, label: 'De $50,001 a $100,000' },
+        { min: 100001, max: 300000, label: 'De $100,001 a $300,000' },
+        { min: 300001, max: 500000, label: 'De $300,001 a $500,000' },
+    ];
+
+    const categories = [
+        'Camisetas',
+        'Pantalones',
+        'Camisas',
+        'Accesorios',
+        'Overoles',
+        'Chaquetas',
+        'Faldas',
+        'Blusas',
+    ];
 
     const handlePriceClick = (index) => {
         setActivePrice(index);
+    };
+
+    const handleCategoryClick = (category) => {
+        setSelectedCategory(category === selectedCategory ? null : category);
+    };
+
+    const applyFilter = () => {
+        const selectedRange = activePrice !== null ? priceRanges[activePrice] : null;
+        const filters = {
+            ...(selectedRange && { min: selectedRange.min, max: selectedRange.max }),
+            ...(selectedCategory && { category: selectedCategory }),
+        };
+        applyFilters(filters);
+        onClose(); // Cerrar el filtro
+    };
+
+    const clearFilters = () => {
+        setActivePrice(null);
+        setSelectedCategory(null);
+        applyFilters({}); // Restablecer filtros
+        onClose(); // Cerrar el filtro
     };
 
     return (
@@ -23,56 +65,83 @@ const Filtro = ({ onClose }) => {
                         {/* Grupo de precio */}
                         <div className="add-searchDetail__group">
                             <div className="add-searchDetail__groupTitle">
-                                <img src="https://auth.dozo-gift.com/front/v1_1/images/common/text/search-price.svg" alt="Precio" />
-                                <span>precio</span>
+                                <img
+                                    src="https://auth.dozo-gift.com/front/v1_1/images/common/text/search-price.svg"
+                                    alt="Precio"
+                                />
+                                <span>Precio</span>
                             </div>
                             <div className="add-searchDetail__groupBody">
-                                <div className="add-searchPriceSelect">
-                                    <ul>
-                                        {['〜2,999 yenes', 'De 3.000 a 4.999 yenes', 'De 5.000 a 9.999 yenes', 'Desde 10.000 yenes'].map((price, index) => (
-                                            <li key={index}>
-                                                <button
-                                                    className={`js-priceBtn add-searchPriceSelect__button ${activePrice === index ? 'active' : ''}`}
-                                                    type="button"
-                                                    onClick={() => handlePriceClick(index)}
-                                                >
-                                                    <span className="add-icon"></span>
-                                                    <span className="add-text">{price}</span>
-                                                </button>
-                                            </li>
-                                        ))}
-                                    </ul>
+                            <div className="add-searchPriceSelect">
+                                <ul>
+                                    {priceRanges.map((range, index) => (
+                                        <li key={index}>
+                                            <button
+                                                className={`js-priceBtn add-searchPriceSelect__button ${
+                                                    activePrice === index ? 'active' : ''
+                                                }`}
+                                                type="button"
+                                                onClick={() => handlePriceClick(index)}
+                                            >
+                                                <span className="add-icon"></span>
+                                                <span className="add-text">
+                                                {range.label}
+                                                </span>
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
                                 </div>
                             </div>
                         </div>
 
                         {/* Grupo de categoría */}
                         <div className="add-searchDetail__group add-is-active">
-                            <div className="add-searchDetail__groupTitle" role="button">
-                                <img src="https://auth.dozo-gift.com/front/v1_1/images/common/text/search-category.svg" alt="Categoría" />
-                                <span>categoría</span>
+                            <div className="add-searchDetail__groupTitle">
+                                <img
+                                    src="https://auth.dozo-gift.com/front/v1_1/images/common/text/search-category.svg"
+                                    alt="Categoría"
+                                />
+                                <span>Categoría</span>
                             </div>
                             <div className="add-searchDetail__groupBody">
-                                <div className="add-tagList">
-                                    <ul>
-                                        <li><a href="1" className="add-tagItem">Camisetas</a></li>
-                                        <li><a href="2" className="add-tagItem">Pantalones</a></li>
-                                        <li><a href="3" className="add-tagItem">Camisas</a></li>
-                                        <li><a href="4" className="add-tagItem">Accesorios</a></li>
-                                        <li><a href="5" className="add-tagItem">Overoles</a></li>
-                                        <li><a href="6" className="add-tagItem">Chaquetas</a></li>
-                                        <li><a href="7" className="add-tagItem">Faldas</a></li>
-                                        <li><a href="8" className="add-tagItem">Blusas</a></li>
-                                    </ul>
+                            <div className="add-tagList">
+                                <ul>
+                                    {categories.map((category, index) => (
+                                        <li key={index}>
+                                            <button
+                                                type="button"
+                                                className={`add-tagItem ${
+                                                    selectedCategory === category ? 'active' : ''
+                                                }`}
+                                                onClick={() => handleCategoryClick(category)}
+                                            >
+                                                {category}
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    {/* Botón para aplicar filtros */}
+                    {/* Botones de acción */}
                     <div className="botonn">
-                        <button type="button" className="boton">
-                            <span>ver con esta condición</span>
+                        <button
+                            type="button"
+                            className="boton"
+                            onClick={applyFilter}
+                        >
+                            Aplicar filtros
+                        </button>
+                        <button
+                            type="button"
+                            className="boton"
+                            onClick={clearFilters}
+                            style={{ backgroundColor: '#D89B67' }} // Color diferente para "Quitar filtros"
+                        >
+                            Quitar filtros
                         </button>
                     </div>
                 </div>

@@ -59,7 +59,7 @@ urlpatterns = [
     path('api/productos/<int:pk>/', ProductoDetailAPIView.as_view(), name='producto-detail'),
     path('api/pedidos/', views.listar_pedidos_usuario, name='listar_pedidos_usuario'),
     path('api/register/', RegisterUserView.as_view(), name='register'),
-    
+    path('api/products/', views.filter_products, name='filter_products'),    
 ]
 if settings.DEBUG:  # Solo para desarrollo
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
