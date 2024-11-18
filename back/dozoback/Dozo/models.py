@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, verbose_name="Correo Electrónico")
     first_name = models.CharField(max_length=30, verbose_name="Nombre")
     last_name = models.CharField(max_length=30, verbose_name="Apellido")
+    telefono = models.CharField(max_length=30, verbose_name="Telefono")
     department = models.CharField(max_length=100, blank=True, null=True, verbose_name="Departamento")
     city = models.CharField(max_length=100, blank=True, null=True, verbose_name="Ciudad")
     address = models.TextField(blank=True, null=True, verbose_name="Dirección")

@@ -21,6 +21,7 @@ from django.conf import settings # type: ignore
 from django.conf.urls.static import static # type: ignore
 from Dozo.views import ProductoListAPIView, ProductoDetailAPIView
 from Dozo.views import CartView
+from Dozo.views import RegisterUserView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -57,6 +58,7 @@ urlpatterns = [
     path('api/productos/', ProductoListAPIView.as_view(), name='producto-list'),  # Nota el uso de .as_view()
     path('api/productos/<int:pk>/', ProductoDetailAPIView.as_view(), name='producto-detail'),
     path('api/pedidos/', views.listar_pedidos_usuario, name='listar_pedidos_usuario'),
+    path('api/register/', RegisterUserView.as_view(), name='register'),
     
 ]
 if settings.DEBUG:  # Solo para desarrollo

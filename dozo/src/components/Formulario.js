@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Importar useNavigate
 import '../styles/Formulario.css';
 
 const Formulario = () => {
+    const navigate = useNavigate(); // Instanciar useNavigate
     const [formData, setFormData] = useState({
+        username: '',
         correo: '',
         contraseña: '',
+        confirmarContraseña: '',
         nombre: '',
         apellido: '',
         departamento: '',
@@ -17,41 +21,40 @@ const Formulario = () => {
     const [departamentos, setDepartamentos] = useState([]);
     const [ciudades, setCiudades] = useState([]);
 
+    // Cargar la lista de departamentos
     useEffect(() => {
-        // Obtener la lista de departamentos al cargar el componente
         fetch('https://api-colombia.com/api/v1/Department')
             .then(response => response.json())
             .then(data => {
-                setDepartamentos(data || []); // Asegura que 'data' sea un array
+                setDepartamentos(data || []);
             })
             .catch(error => {
                 console.error('Error al obtener departamentos:', error);
-                setDepartamentos([]); // Si hay error, establece departamentos como lista vacía
+                setDepartamentos([]);
             });
     }, []);
 
+    // Cargar las ciudades del departamento seleccionado
     useEffect(() => {
-        // Obtener las ciudades del departamento seleccionado
         if (formData.departamento) {
             const departamentoSeleccionado = departamentos.find(
                 depto => depto.name === formData.departamento
             );
             if (departamentoSeleccionado && departamentoSeleccionado.id) {
-                // Realiza una solicitud para obtener las ciudades del departamento seleccionado
                 fetch(`https://api-colombia.com/api/v1/Department/${departamentoSeleccionado.id}/cities`)
                     .then(response => response.json())
                     .then(data => {
-                        setCiudades(data || []); // Asegura que 'data' sea un array
+                        setCiudades(data || []);
                     })
                     .catch(error => {
                         console.error('Error al obtener ciudades:', error);
-                        setCiudades([]); // Si hay error, establece ciudades como lista vacía
+                        setCiudades([]);
                     });
             } else {
-                setCiudades([]); // Si no hay un departamento seleccionado, establece ciudades como lista vacía
+                setCiudades([]);
             }
         } else {
-            setCiudades([]); // Si no hay departamento, limpia las ciudades
+            setCiudades([]);
         }
     }, [formData.departamento, departamentos]);
 
@@ -65,11 +68,17 @@ const Formulario = () => {
     const validate = () => {
         const newErrors = {};
 
+        if (!formData.username) newErrors.username = "El nombre de usuario es obligatorio";
+
         if (!formData.correo) newErrors.correo = "El correo es obligatorio";
         else if (!/\S+@\S+\.\S+/.test(formData.correo)) newErrors.correo = "Ingrese un correo válido";
 
         if (!formData.contraseña) newErrors.contraseña = "La contraseña es obligatoria";
         else if (formData.contraseña.length < 8) newErrors.contraseña = "La contraseña debe tener al menos 8 caracteres";
+
+        if (formData.contraseña !== formData.confirmarContraseña) {
+            newErrors.confirmarContraseña = "Las contraseñas no coinciden";
+        }
 
         if (!formData.nombre) newErrors.nombre = "El nombre es obligatorio";
 
@@ -79,11 +88,6 @@ const Formulario = () => {
 
         if (!formData.ciudad) newErrors.ciudad = "La ciudad es obligatoria";
 
-        if (!formData.direccion) newErrors.direccion = "La dirección es obligatoria";
-
-        if (!formData.codigoPostal) newErrors.codigoPostal = "El código postal es obligatorio";
-        else if (!/^\d{5}$/.test(formData.codigoPostal)) newErrors.codigoPostal = "Ingrese un código postal válido (5 dígitos)";
-
         setErrors(newErrors);
 
         return Object.keys(newErrors).length === 0;
@@ -92,19 +96,68 @@ const Formulario = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (validate()) {
-            alert("Formulario enviado correctamente");
-            // Aquí puedes enviar los datos al servidor o manejar la lógica de envío
+            const payload = {
+                username: formData.username, // Nuevo campo de username
+                email: formData.correo,
+                password: formData.contraseña,
+                first_name: formData.nombre,
+                last_name: formData.apellido,
+                department: formData.departamento,
+                city: formData.ciudad,
+                address: formData.direccion,
+                postal_code: formData.codigoPostal,
+                role: 'user',
+            };
+
+            fetch('http://localhost:8000/api/register/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            })
+                .then((response) => {
+                    if (response.ok) {
+                        alert('Usuario registrado exitosamente');
+                        setFormData({
+                            username: '',
+                            correo: '',
+                            contraseña: '',
+                            confirmarContraseña: '',
+                            nombre: '',
+                            apellido: '',
+                            departamento: '',
+                            ciudad: '',
+                            direccion: '',
+                            codigoPostal: '',
+                        });
+                        navigate('/'); // Redirigir a la raíz
+                    } else {
+                        return response.json().then((data) => {
+                            setErrors(data);
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error al registrar usuario:', error);
+                });
         }
     };
 
     return (
         <div className="con_form">
-            <div className="box_st text-center" id="frm_form">
-                <h2 className="font-normal sm:text-16 md:text-18">Ingrese los siguientes elementos y proceda con el registro de membresía.</h2>
-                <p className="font-normal txt sm:text-13 md:text-13">El elemento "<em>*</em>" es un campo obligatorio</p>
-            </div>
-
             <form onSubmit={handleSubmit} className="box_form">
+                <div className="item">
+                    <label className="caption">Nombre de Usuario*</label>
+                    <input
+                        type="text"
+                        name="username"
+                        value={formData.username}
+                        onChange={handleChange}
+                        className="frm"
+                    />
+                    {errors.username && <p className="error-message">{errors.username}</p>}
+                </div>
                 <div className="item">
                     <label className="caption">Correo electrónico*</label>
                     <input
@@ -126,6 +179,17 @@ const Formulario = () => {
                         className="frm"
                     />
                     {errors.contraseña && <p className="error-message">{errors.contraseña}</p>}
+                </div>
+                <div className="item">
+                    <label className="caption">Confirmar Contraseña*</label>
+                    <input
+                        type="password"
+                        name="confirmarContraseña"
+                        value={formData.confirmarContraseña}
+                        onChange={handleChange}
+                        className="frm"
+                    />
+                    {errors.confirmarContraseña && <p className="error-message">{errors.confirmarContraseña}</p>}
                 </div>
                 <div className="item">
                     <label className="caption">Nombre*</label>
@@ -185,7 +249,7 @@ const Formulario = () => {
                     {errors.ciudad && <p className="error-message">{errors.ciudad}</p>}
                 </div>
                 <div className="item">
-                    <label className="caption">Dirección*</label>
+                    <label className="caption">Dirección</label>
                     <input
                         type="text"
                         name="direccion"
@@ -193,10 +257,9 @@ const Formulario = () => {
                         onChange={handleChange}
                         className="frm"
                     />
-                    {errors.direccion && <p className="error-message">{errors.direccion}</p>}
                 </div>
                 <div className="item">
-                    <label className="caption">Código Postal*</label>
+                    <label className="caption">Código Postal</label>
                     <input
                         type="text"
                         name="codigoPostal"
@@ -204,7 +267,6 @@ const Formulario = () => {
                         onChange={handleChange}
                         className="frm"
                     />
-                    {errors.codigoPostal && <p className="error-message">{errors.codigoPostal}</p>}
                 </div>
                 <div className="box_action">
                     <button type="submit" className="btn_submit">Registrarse</button>

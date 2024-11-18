@@ -504,3 +504,23 @@ def listar_pedidos_usuario(request):
         return JsonResponse({"pedidos": pedidos}, status=200)
     except Exception as e:
         return JsonResponse({"error": f"Error al obtener pedidos: {str(e)}"}, status=500)
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import CustomUser
+from .serializers import CustomUserSerializer
+
+class RegisterUserView(APIView):
+    def post(self, request):
+        serializer = CustomUserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Usuario registrado exitosamente"}, status=status.HTTP_201_CREATED)
+
+        print("Errores del serializer:", serializer.errors)  # Imprime errores en consola
+        return Response({"errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
