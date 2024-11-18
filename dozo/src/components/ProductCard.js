@@ -4,17 +4,17 @@ import { Link } from 'react-router-dom';
 import { useCart } from './CartContext';
 import { useFilters } from './FilterContext';
 
-const ProductCardComponent = () => {
-    const [productos, setProductos] = useState([]);
-    const [filteredProducts, setFilteredProducts] = useState([]);
-    const [visibleProducts, setVisibleProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [showAll, setShowAll] = useState(false);
-    const { filters, applyFilters } = useFilters();
-    const { addToCart } = useCart();
+const ProductCardComponent = ({ onProductCountChange }) => {
+    const [productos, setProductos] = useState([]); // Todos los productos
+    const [filteredProducts, setFilteredProducts] = useState([]); // Productos filtrados
+    const [visibleProducts, setVisibleProducts] = useState([]); // Productos visibles
+    const [loading, setLoading] = useState(true); // Estado de carga
+    const [showAll, setShowAll] = useState(false); // Alternar entre mostrar más o menos productos
+    const { filters, applyFilters } = useFilters(); // Filtros desde el contexto
+    const { addToCart } = useCart(); // Función para añadir al carrito
 
-    const PRODUCTS_INITIAL = 20;
-    const PRODUCTS_INCREMENT = 10;
+    const PRODUCTS_INITIAL = 20; // Cantidad inicial de productos visibles
+    const PRODUCTS_INCREMENT = 10; // Incremento de productos al mostrar más
 
     useEffect(() => {
         fetch('http://localhost:8000/api/productos/')
@@ -24,13 +24,14 @@ const ProductCardComponent = () => {
                 setFilteredProducts(data);
                 setVisibleProducts(data.slice(0, PRODUCTS_INITIAL));
                 setLoading(false);
+                onProductCountChange?.(data.length); // Comunicar el total de productos
             })
             .catch((error) => console.error('Error al cargar los productos:', error));
-    }, []);
+    }, [onProductCountChange]);
 
     useEffect(() => {
         if (filters) {
-            const { min, max, category } = filters;
+            const { min, max, category, search } = filters;
             const filtered = productos.filter((producto) => {
                 const matchesPrice =
                     min !== undefined && max !== undefined
@@ -39,16 +40,21 @@ const ProductCardComponent = () => {
                 const matchesCategory = category
                     ? producto.categoria?.nombre === category
                     : true;
-                return matchesPrice && matchesCategory;
+                const matchesSearch = search
+                    ? producto.titulo.toLowerCase().includes(search.toLowerCase())
+                    : true;
+                return matchesPrice && matchesCategory && matchesSearch;
             });
             setFilteredProducts(filtered);
             setVisibleProducts(filtered.slice(0, PRODUCTS_INITIAL));
             setShowAll(false);
+            onProductCountChange?.(filtered.length); // Comunicar el total filtrado
         } else {
             setFilteredProducts(productos);
             setVisibleProducts(productos.slice(0, PRODUCTS_INITIAL));
+            onProductCountChange?.(productos.length); // Total sin filtros
         }
-    }, [filters, productos]);
+    }, [filters, productos, onProductCountChange]);
 
     const handleToggleShow = () => {
         if (showAll) {
@@ -77,13 +83,20 @@ const ProductCardComponent = () => {
     return (
         <div className="product-card-section">
             <div className="applied-filters">
+                {filters?.search && (
+                    <li
+                        className="selector_categoria"
+                        onClick={() => clearFilter('search')}
+                    >
+                        🔍 "{filters.search}" <span className="equis">×</span>
+                    </li>
+                )}
                 {filters?.category && (
                     <li
                         className="selector_categoria"
                         onClick={() => clearFilter('category')}
                     >
-                        🏷️ {filters.category}{' '}
-                        <span className="equis">×</span>
+                        🏷️ {filters.category} <span className="equis">×</span>
                     </li>
                 )}
                 {filters?.min !== undefined && filters?.max !== undefined && (
@@ -91,8 +104,7 @@ const ProductCardComponent = () => {
                         className="selector_categoria"
                         onClick={() => clearFilter('price')}
                     >
-                        💰 {`De $${filters.min} a $${filters.max}`}{' '}
-                        <span className="equis">×</span>
+                        💰 {`De $${filters.min} a $${filters.max}`} <span className="equis">×</span>
                     </li>
                 )}
             </div>

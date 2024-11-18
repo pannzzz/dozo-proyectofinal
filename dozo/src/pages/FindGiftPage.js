@@ -7,12 +7,21 @@ import BuscarIcon from '../assets/icons/search';
 import '../styles/FindGiftPage.css';
 import Card from '../components/ProductCard';
 import Filtro from '../components/filtro';
+import { useFilters } from '../components/FilterContext'; // Importar el contexto de filtros
 
 const FindGiftPage = () => {
     const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [productCount, setProductCount] = useState(0); // Estado para el conteo de productos
+    const { applyFilters } = useFilters(); // Obtener la función para aplicar filtros
 
     const toggleFilterModal = () => {
         setIsFilterModalOpen(!isFilterModalOpen);
+    };
+
+    const handleSearch = (event) => {
+        event.preventDefault();
+        applyFilters({ search: searchQuery }); // Aplicar filtro de búsqueda por palabra clave
     };
 
     return (
@@ -20,13 +29,20 @@ const FindGiftPage = () => {
             <Navbar initialScrolled={true} />
             <div className="find-gift-page">
                 <div className="sub-navbar">
-                    <h2><span className="number-text">104</span> tema</h2>
+                    <h2>
+                        <span className="number-text">{productCount}</span> Productos
+                    </h2>
                     <div className="sub-navbar-actions">
-                        <form className="sub-search-form">
+                        <form className="sub-search-form" onSubmit={handleSearch}>
                             <button type="submit" className="sub-search-button">
                                 <img src={searchIcon} alt="Buscar" className="search-icon" />
                             </button>
-                            <input type="text" placeholder="Búsqueda por palabra clave" />
+                            <input
+                                type="text"
+                                placeholder="Búsqueda por palabra clave"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                            />
                         </form>
                         <button className="sub-action-button" onClick={toggleFilterModal}>
                             <img src={filterIcon} alt="Filtrar" className="filter-icon" />
@@ -37,7 +53,7 @@ const FindGiftPage = () => {
                     </div>
                 </div>
 
-                {isFilterModalOpen && <Filtro onClose={toggleFilterModal} />}
+                {isFilterModalOpen && <Filtro onClose={toggleFilterModal} productCount={productCount} />} {/* Pasar productCount */}
 
                 <div className="content">
                     <a href="/" className="breadcrumb-find">Dozo</a> / Encuentra un regalo
@@ -45,7 +61,7 @@ const FindGiftPage = () => {
                     <div className="underline1"></div>
                     <h1><BuscarIcon /></h1>
                 </div>
-                <Card />
+                <Card onProductCountChange={setProductCount} /> {/* Pasar setProductCount */}
             </div>
         </>
     );

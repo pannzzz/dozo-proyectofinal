@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Filtro.css';
 import { useFilters } from './FilterContext'; // Importar el contexto de filtros
 
-const Filtro = ({ onClose }) => {
+const Filtro = ({ onClose, productCount = 0 }) => { // Asegurarte de recibir el prop productCount
     const { applyFilters } = useFilters(); // Obtener la función para aplicar filtros
     const [activePrice, setActivePrice] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
@@ -58,8 +58,8 @@ const Filtro = ({ onClose }) => {
                 </button>
                 <div className="add-searchDetail add-js-searchDetailAccordion">
                     <div className="add-searchDetail__themeSelected">
-                        <span className="num">104</span>
-                        <span className="texto">Selección de temas</span>
+                        <span className="num">{productCount}</span> {/* Mostrar conteo dinámico */}
+                        <span className="texto">Selección de Productos</span>
                     </div>
                     <div className="add-searchDetail__queries">
                         {/* Grupo de precio */}
@@ -72,25 +72,23 @@ const Filtro = ({ onClose }) => {
                                 <span>Precio</span>
                             </div>
                             <div className="add-searchDetail__groupBody">
-                            <div className="add-searchPriceSelect">
-                                <ul>
-                                    {priceRanges.map((range, index) => (
-                                        <li key={index}>
-                                            <button
-                                                className={`js-priceBtn add-searchPriceSelect__button ${
-                                                    activePrice === index ? 'active' : ''
-                                                }`}
-                                                type="button"
-                                                onClick={() => handlePriceClick(index)}
-                                            >
-                                                <span className="add-icon"></span>
-                                                <span className="add-text">
-                                                {range.label}
-                                                </span>
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="add-searchPriceSelect">
+                                    <ul>
+                                        {priceRanges.map((range, index) => (
+                                            <li key={index}>
+                                                <button
+                                                    className={`js-priceBtn add-searchPriceSelect__button ${
+                                                        activePrice === index ? 'active' : ''
+                                                    }`}
+                                                    type="button"
+                                                    onClick={() => handlePriceClick(index)}
+                                                >
+                                                    <span className="add-icon"></span>
+                                                    <span className="add-text">{range.label}</span>
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -105,22 +103,22 @@ const Filtro = ({ onClose }) => {
                                 <span>Categoría</span>
                             </div>
                             <div className="add-searchDetail__groupBody">
-                            <div className="add-tagList">
-                                <ul>
-                                    {categories.map((category, index) => (
-                                        <li key={index}>
-                                            <button
-                                                type="button"
-                                                className={`add-tagItem ${
-                                                    selectedCategory === category ? 'active' : ''
-                                                }`}
-                                                onClick={() => handleCategoryClick(category)}
-                                            >
-                                                {category}
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="add-tagList">
+                                    <ul>
+                                        {categories.map((category, index) => (
+                                            <li key={index}>
+                                                <button
+                                                    type="button"
+                                                    className={`add-tagItem ${
+                                                        selectedCategory === category ? 'active' : ''
+                                                    }`}
+                                                    onClick={() => handleCategoryClick(category)}
+                                                >
+                                                    {category}
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -128,11 +126,7 @@ const Filtro = ({ onClose }) => {
 
                     {/* Botones de acción */}
                     <div className="botonn">
-                        <button
-                            type="button"
-                            className="boton"
-                            onClick={applyFilter}
-                        >
+                        <button type="button" className="boton" onClick={applyFilter}>
                             Aplicar filtros
                         </button>
                         <button
